@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Behavioral Sciences Directory</title>
+<title>Behavior Central</title>
 <style>
   :root {
     --maroon: #943937;
+    --maroon-dark: #6e2826;
     --ink: #222;
     --muted: #5a5a5a;
     --line: #e4e4e4;
@@ -15,21 +16,45 @@
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
+    margin: 0; background: var(--bg); color: var(--ink);
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.45;
+    font-size: 16px; line-height: 1.5;
   }
   .wrap { max-width: 1000px; padding: 8px 12px 24px; }
+  a { color: #2b2b2b; text-decoration-color: rgba(0,0,0,.28); text-underline-offset: 2px; }
+  a:hover { text-decoration-color: currentColor; }
 
-  /* Tabs */
-  .tabs {
-    display: flex; flex-wrap: wrap; gap: 4px;
-    border-bottom: 2px solid var(--maroon);
-    margin-bottom: 16px;
+  /* ---------- Section switcher (Community / Research) ---------- */
+  .sitenav {
+    display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 14px;
+    background: #f1ecec; border-radius: 999px;
   }
+  .sitenav .seg {
+    appearance: none; border: 0; background: transparent; cursor: pointer;
+    font: inherit; font-weight: 700; font-size: 0.95em; color: var(--muted);
+    padding: 8px 20px; border-radius: 999px;
+  }
+  .sitenav .seg:hover { color: var(--maroon); }
+  .sitenav .seg[aria-selected="true"] { background: var(--maroon); color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  .sitenav .seg:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+
+  /* ---------- Banner ---------- */
+  .banner {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    color: #fff; border-radius: 12px; padding: 24px 24px 22px; margin-bottom: 16px;
+  }
+  .banner::after {
+    content: ""; position: absolute; right: -60px; top: -60px;
+    width: 220px; height: 220px; border-radius: 50%;
+    border: 28px solid rgba(255,255,255,0.08);
+  }
+  .banner .eyebrow { margin: 0 0 4px; font-size: 0.78em; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.8; }
+  .banner h1 { margin: 0; font-size: 2.2em; line-height: 1.1; font-weight: 800; letter-spacing: -0.01em; }
+  .banner .sub { margin: 6px 0 0; opacity: 0.9; }
+
+  /* ---------- Tabs ---------- */
+  .tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid #d9d9d9; margin-bottom: 16px; }
   .tab {
     appearance: none; border: 1px solid var(--line); border-bottom: none;
     background: #f4f4f4; color: var(--muted);
@@ -42,59 +67,700 @@
 
   .intro { margin: 0 0 12px; font-weight: 600; }
   h2 {
-    margin: 22px 0 8px; padding: 4px 10px;
-    border-left: 5px solid var(--maroon);
-    color: var(--maroon); font-size: 1.2em;
+    margin: 26px 0 10px; padding: 4px 10px;
+    border-left: 3px solid #d8c7c6; color: var(--ink); font-size: 1.15em;
   }
-  .panel > h2:first-child { margin-top: 0; }
+  .panel > h2:first-child, .panel > .intro + h2 { margin-top: 0; }
+  h2 + h3.sub-h { margin-top: 4px !important; }
+  h3.sub-h { margin: 18px 0 8px; font-size: 1em; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .note { font-size: 0.85em; color: var(--muted); font-style: italic; margin: 6px 0 0; }
 
-  /* Table (desktop) */
+  /* ---------- Directory table ---------- */
   table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
-  th {
-    text-align: left; font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.04em;
-    color: var(--muted); padding: 6px 10px; border-bottom: 2px solid var(--line);
-  }
+  th { text-align: left; font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); padding: 6px 10px; border-bottom: 2px solid var(--line); }
   td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
   tbody tr:nth-child(even) { background: var(--stripe); }
   .name { font-weight: 700; }
-  .name a { color: var(--maroon); text-decoration: none; }
-  .name a:hover { text-decoration: underline; }
   .role { display: block; color: var(--muted); font-size: 0.9em; font-weight: 400; }
-  .li { font-size: 0.78em; font-weight: 600; margin-left: 6px; color: #0a66c2; }
-  td a[href^="mailto"] { color: var(--maroon); word-break: break-all; }
-  .col-name { width: 32%; }
-  .col-email { width: 26%; }
-  .col-office { width: 18%; }
+  td a[href^="mailto"] { word-break: break-all; }
+  .col-name { width: 32%; } .col-email { width: 26%; } .col-office { width: 18%; }
 
-  /* Stacked list (phones) */
+  /* ---------- Cards, buttons ---------- */
+  .callout { border-left: 3px solid #d8c7c6; background: var(--stripe); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
+  .callout p { margin: 0; }
+  .callout-title { color: var(--ink); font-weight: 800; font-size: 1.1em; margin-bottom: 4px !important; }
+  .prose p { margin: 0 0 10px; }
+  .grid { display: grid; gap: 14px; margin: 12px 0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .card { display: block; border: 1px solid var(--line); border-top: 4px solid var(--maroon); border-radius: 10px; padding: 14px 16px; background: #fff; color: var(--ink); }
+  .card h3 { margin: 0 0 6px; font-size: 1.1em; color: var(--maroon); }
+  .card p { margin: 0; font-size: 0.93em; color: #444; }
+  a.tool { text-decoration: none; transition: box-shadow .15s, transform .15s; }
+  a.tool:hover { box-shadow: 0 4px 14px rgba(0,0,0,.08); transform: translateY(-2px); }
+  a.tool h3::after { content: " ↗"; font-size: 0.8em; opacity: 0.6; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .btn { display: inline-block; padding: 7px 13px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9em; color: #444; background: #fff; border: 1px solid #cfcfcf; }
+  .btn:hover { background: #f4f4f4; border-color: #aaa; }
+  .btn-primary { background: var(--maroon); color: #fff; }
+  .btn-primary:hover { background: #7a2e2c; }
+
+  /* Publication entries */
+  .pub { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; background: #fff; }
+  .pub-type { display: inline-block; font-size: 0.72em; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--maroon); background: var(--stripe); border-radius: 4px; padding: 2px 8px; margin-bottom: 6px; }
+  .pub-who { margin: 0; font-weight: 700; }
+  .pub-where { margin: 2px 0 0; color: var(--muted); font-size: 0.93em; }
+  .pub-ref { margin: 10px 0 0; font-size: 0.88em; color: #444; padding-left: 1.5em; text-indent: -1.5em; }
+  .pub .btns { margin-top: 10px; }
+
+  /* Research in progress */
+  .pres { padding: 10px 0; border-top: 1px solid var(--line); }
+  .pres:first-of-type { border-top: 0; }
+  .pres .pub-ref { margin: 0; }
+  .pres-meta { margin: 4px 0 0 1.5em; font-size: 0.85em; color: var(--muted); }
+  .pres-btn { margin: 8px 0 0 1.5em !important; }
+  ul.projects { margin: 0; padding: 0; list-style: none; }
+  ul.projects li { padding: 9px 0 9px 14px; border-left: 3px solid var(--line); margin-bottom: 6px; }
+
+  /* Facilities */
+  .facility { margin-bottom: 20px; }
+  .facility h3 { margin: 0 0 6px; color: var(--maroon); font-size: 1.1em; }
+  .facility p { margin: 0 0 10px; }
+  .photos { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); background: #f4f4f4; display: block; }
+
+  .lead { margin: 0 0 10px; }
+  .col-res { width: 30%; } .col-stu { width: 22%; } .col-adv { width: 20%; } .col-note { width: 18%; } .col-link { width: 96px; }
+  table.res td.name a { color: var(--ink); text-decoration: none; }
+  table.res td.name a:hover { text-decoration: underline; }
+  .btn-sm { padding: 4px 10px; font-size: 0.82em; white-space: nowrap; }
+  table + h3.sub-h, table + h2 { margin-top: 26px; }
+
+  .block-head { margin: 48px 0 14px; padding-top: 22px; border-top: 1px solid #e3d6d5; }
+  .block-head .eyebrow { margin: 0 0 2px; font-size: 0.75em; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .block-title { margin: 0; padding: 0; border: 0; font-size: 1.6em; font-weight: 800; color: var(--ink); }
+  .club-name { margin: 0 0 6px; font-weight: 800; font-size: 1.1em; }
+  ul.focus { margin: 0 0 4px; padding-left: 20px; }
+  ul.focus li { margin-bottom: 3px; }
+  table.officers { margin-top: 4px; }
+
+  .col-links { width: 30%; }
+  .link-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  table.kv td.name { width: 22%; }
+  .col-contact { width: 26%; }
+  ul.sites { columns: 3 220px; column-gap: 24px; margin: 0; padding-left: 18px; }
+  ul.sites li { break-inside: avoid; margin-bottom: 4px; }
+  .quote { margin: 0 0 12px; padding: 12px 16px; border-left: 3px solid #d8c7c6; background: var(--stripe); border-radius: 6px; font-style: italic; }
+  .quote cite { display: block; margin-top: 6px; font-style: normal; font-weight: 700; font-size: 0.9em; }
+  .quote cite::before { content: "— "; }
+
+  .step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .step:last-child { border-bottom: 0; }
+  .step-num { flex: 0 0 30px; height: 30px; border-radius: 50%; background: #f1ecec; color: var(--ink); font-weight: 800; display: grid; place-items: center; font-size: 0.95em; }
+  .step-body { flex: 1; min-width: 0; }
+  .step-body h3 { margin: 3px 0 6px; font-size: 1.05em; }
+  .step-body p { margin: 0 0 8px; }
+  .step-body .btns { margin-top: 6px; }
+  .step-body table { margin-top: 6px; }
+  ol.howto { margin: 0 0 6px; padding-left: 20px; }
+  ol.howto li { margin-bottom: 8px; }
+  ul.forms { list-style: none; padding-left: 0; }
+  a.plain { color: var(--ink); text-decoration: none; }
+  a.plain:hover { text-decoration: underline; }
+  section > .callout { margin-bottom: 14px; }
+
+  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin: 6px 0 8px; }
+  .tile { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); text-decoration: none; transition: border-color .15s, box-shadow .15s; }
+  .tile:hover { border-color: #cdb9b8; box-shadow: 0 3px 10px rgba(0,0,0,.06); }
+  .tile-title { display: block; font-weight: 800; font-size: 1.05em; margin-bottom: 4px; }
+  .tile-desc { display: block; font-size: 0.92em; color: var(--muted); }
+
+  /* ---------- Phones ---------- */
   @media (max-width: 640px) {
+    .banner { padding: 20px 16px; }
+    .banner h1 { font-size: 1.8em; }
+    .sitenav { display: flex; flex-wrap: wrap; border-radius: 14px; }
+    .sitenav .seg { flex: 1 1 auto; padding: 8px 12px; }
     thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     table, tbody, tr, td { display: block; width: 100%; }
-    tbody tr {
-      border: 1px solid var(--line); border-left: 4px solid var(--maroon);
-      border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; background: #fff !important;
-    }
-    td { border: none; padding: 2px 0; display: grid; grid-template-columns: 62px 1fr; gap: 8px; }
-    td::before {
-      content: attr(data-label); color: var(--maroon);
-      font-size: 0.8em; font-weight: 700; padding-top: 2px;
-    }
+    tbody tr { border: 1px solid var(--line); border-left: 3px solid #d8c7c6; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; background: #fff !important; }
+    td { border: none; padding: 2px 0; display: grid; grid-template-columns: 84px 1fr; gap: 8px; }
+    td::before { content: attr(data-label); color: var(--muted); font-size: 0.8em; font-weight: 700; padding-top: 2px; }
     td.name { display: block; padding-bottom: 6px; font-size: 1.05em; }
     td.name::before { content: none; }
     td:empty { display: none; }
+    td[data-label] > .role { grid-column: 2; margin-top: -6px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="tabs" role="tablist" aria-label="Departments" id="tabs"></div>
-  <div id="panels"></div>
+
+  <!-- Section switcher -->
+  <div class="sitenav" role="tablist" aria-label="Sections">
+    <button class="seg" type="button" role="tab" id="tab-home" aria-controls="sec-home">Home</button>
+    <button class="seg" type="button" role="tab" id="tab-advising" aria-controls="sec-advising">Advising</button>
+    <button class="seg" type="button" role="tab" id="tab-people" aria-controls="sec-people">Faculty &amp; Staff</button>
+    <button class="seg" type="button" role="tab" id="tab-community" aria-controls="sec-community">Community</button>
+    <button class="seg" type="button" role="tab" id="tab-research" aria-controls="sec-research">Research</button>
+    <button class="seg" type="button" role="tab" id="tab-internships" aria-controls="sec-internships">Internships</button>
+    <button class="seg" type="button" role="tab" id="tab-support" aria-controls="sec-support">Support</button>
+  </div>
+
+  <!-- ============================ HOME ============================ -->
+  <section id="sec-home" role="tabpanel" aria-labelledby="tab-home">
+    <header class="banner">
+      <p class="eyebrow">Flagler College · Behavioral Sciences</p>
+      <h1>Behavior Central</h1>
+      <p class="sub">Your hub for Criminology, Psychology, and Sociology</p>
+    </header>
+    <p class="lead">Welcome! Everything you need as a Behavioral Sciences student is here: advising and registration, who's who, ways to get involved, research, internships, and campus support. Pick a section to get started.</p>
+
+    <div class="tiles">
+      <a class="tile" href="#advising">
+        <span class="tile-title">Advising <span aria-hidden="true">→</span></span>
+        <span class="tile-desc">Prepare for your advising meeting, register for classes, and find forms.</span>
+      </a>
+      <a class="tile" href="#people">
+        <span class="tile-title">Faculty &amp; Staff <span aria-hidden="true">→</span></span>
+        <span class="tile-desc">Directory, offices, and office hours for Criminology, Psychology, and Sociology.</span>
+      </a>
+      <a class="tile" href="#community">
+        <span class="tile-title">Community <span aria-hidden="true">→</span></span>
+        <span class="tile-desc">Psi Chi and the Psychology Club: get involved.</span>
+      </a>
+      <a class="tile" href="#research">
+        <span class="tile-title">Research <span aria-hidden="true">→</span></span>
+        <span class="tile-desc">IRB, Sona Systems, research tools, and student and faculty work.</span>
+      </a>
+      <a class="tile" href="#internships">
+        <span class="tile-title">Internships <span aria-hidden="true">→</span></span>
+        <span class="tile-desc">Requirements, how to get started, and where students have interned.</span>
+      </a>
+      <a class="tile" href="#support">
+        <span class="tile-title">Support <span aria-hidden="true">→</span></span>
+        <span class="tile-desc">Campus offices for careers, wellness, tutoring, technology, and more.</span>
+      </a>
+    </div>
+
+    <h2>Coming Up</h2>
+    <table class="kv">
+      <tbody>
+        <tr><td class="name">Mon–Tue, October 12–13</td><td data-label="What">Fall Break (classes canceled)</td></tr>
+        <tr><td class="name">Thu, October 15</td><td data-label="What">Graduation Application deadline for May 2027 graduates. <a href="#adv-register">Graduation details</a></td></tr>
+        <tr><td class="name">Sat, October 17</td><td data-label="What">Campus Visit Day</td></tr>
+        <tr><td class="name">Tue–Thu, October 20–29</td><td data-label="What">Registration for Spring 2027. Check your registration time in your CACE email, and meet with your advisor before your window opens. <a href="#adv-register">Registration details</a></td></tr>
+        <tr><td class="name">Thu, October 29, 5:00 PM</td><td data-label="What">Last day to withdraw from a course with a W</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Questions?</h2>
+    <p class="lead">Start with your faculty advisor (find them under <a href="#people">Faculty &amp; Staff</a>). For advising and registration help, contact CACE at <a href="mailto:cace@flagler.edu">cace@flagler.edu</a>.</p>
+  </section>
+
+  <!-- ============================ COMMUNITY ============================ -->
+  <section id="sec-community" role="tabpanel" aria-labelledby="tab-community">
+    <header class="banner">
+      <p class="eyebrow">Behavioral Sciences</p>
+      <h1>Community</h1>
+      <p class="sub">Student organizations: get involved</p>
+    </header>
+    <div class="tabs" role="tablist" aria-label="Student organizations">
+      <button class="tab" type="button" role="tab" id="tab-psichi" aria-controls="panel-psichi">Psi Chi</button>
+      <button class="tab" type="button" role="tab" id="tab-psyclub" aria-controls="panel-psyclub">Psychology Club</button>
+    </div>
+
+    <div class="panel" id="panel-psichi" role="tabpanel" aria-labelledby="tab-psichi">
+      <p class="club-name">Psi Chi · The International Honor Society in Psychology</p>
+      <p class="lead">Our Psi Chi chapter centers on scholarship, service, and professional development in psychology. Members take part in research spotlights, outreach, and events that connect coursework to real-world impact, with opportunities for leadership, conference participation, and connection to a global community of scholars.</p>
+      <div class="btns">
+        <a class="btn" href="https://www.psichi.org/" target="_blank" rel="noopener">About Psi Chi ↗</a>
+        <a class="btn" href="https://www.instagram.com/psichifc/" target="_blank" rel="noopener">Instagram ↗</a>
+      </div>
+      <h3 class="sub-h">Officers &amp; Advisor</h3>
+      <table class="officers">
+        <thead><tr><th scope="col" class="col-stu">Name</th><th scope="col" class="col-adv">Role</th><th scope="col">Email</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Paige Blumbek</td><td data-label="Role">President</td><td data-label="Email"><a href="mailto:blumek771@flagler.edu">blumek771@flagler.edu</a></td></tr>
+          <tr><td class="name">Carly Stern</td><td data-label="Role">Vice President</td><td data-label="Email"><a href="mailto:stern728@flagler.edu">stern728@flagler.edu</a></td></tr>
+          <tr><td class="name">Gia Venetucci</td><td data-label="Role">Secretary</td><td data-label="Email"><a href="mailto:venetucci956@flagler.edu">venetucci956@flagler.edu</a></td></tr>
+          <tr><td class="name">Cameran McDivitt</td><td data-label="Role">Social Media Manager</td><td data-label="Email"><a href="mailto:mcdivitt461@flagler.edu">mcdivitt461@flagler.edu</a></td></tr>
+          <tr><td class="name">Dr. Tracy Litzinger</td><td data-label="Role">Faculty Advisor</td><td data-label="Email"><a href="mailto:tlitzinger@flagler.edu">tlitzinger@flagler.edu</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="panel-psyclub" role="tabpanel" aria-labelledby="tab-psyclub">
+      <p class="club-name">The Psychology Club</p>
+      <p class="lead">An official Flagler College student organization, launched in Spring 2025. We focus on:</p>
+      <ul class="focus">
+        <li><strong>Social connection</strong>: bringing students and faculty together around shared interests</li>
+        <li><strong>Fun events</strong>: movie nights, fundraisers, group trips, and more</li>
+        <li><strong>Professional development</strong>: help with resumes, cover letters, and networking</li>
+        <li><strong>Research events</strong>: workshops, presentations, and collaborations</li>
+        <li><strong>Student-centered</strong>: we listen to your needs and adapt</li>
+      </ul>
+      <div class="btns">
+        <a class="btn" href="https://saintsconnect.flagler.edu/PSC/club_signup" target="_blank" rel="noopener">Join on Saints Connect ↗</a>
+        <a class="btn" href="https://www.instagram.com/thepsychologyclubfc/" target="_blank" rel="noopener">Instagram ↗</a>
+      </div>
+      <h3 class="sub-h">Executive Board &amp; Advisor</h3>
+      <table class="officers">
+        <thead><tr><th scope="col" class="col-stu">Name</th><th scope="col" class="col-adv">Role</th><th scope="col">Email</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Shelby Kushner</td><td data-label="Role">President</td><td data-label="Email"><a href="mailto:kushner904@flagler.edu">kushner904@flagler.edu</a></td></tr>
+          <tr><td class="name">Elena Hailey</td><td data-label="Role">Vice President</td><td data-label="Email"><a href="mailto:pfluger142@flagler.edu">pfluger142@flagler.edu</a></td></tr>
+          <tr><td class="name">Isabella Kraemer</td><td data-label="Role">Secretary</td><td data-label="Email"><a href="mailto:kraemer485@flagler.edu">kraemer485@flagler.edu</a></td></tr>
+          <tr><td class="name">Jennavieve Jensen</td><td data-label="Role">Treasurer</td><td data-label="Email"><a href="mailto:jensen352@flagler.edu">jensen352@flagler.edu</a></td></tr>
+          <tr><td class="name">Dr. Angel Munoz</td><td data-label="Role">Faculty Advisor</td><td data-label="Email"><a href="mailto:amunozgomezandrade@flagler.edu">amunozgomezandrade@flagler.edu</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================ FACULTY & STAFF ============================ -->
+  <section id="sec-people" role="tabpanel" aria-labelledby="tab-people">
+    <header class="banner">
+      <p class="eyebrow">Behavioral Sciences</p>
+      <h1>Faculty &amp; Staff</h1>
+      <p class="sub">Directory and office hours</p>
+    </header>
+    <div class="tabs" role="tablist" aria-label="Departments" id="dir-tabs"></div>
+    <div id="dir-panels"></div>
+  </section>
+
+  <!-- ============================ RESEARCH ============================ -->
+  <section id="sec-research" role="tabpanel" aria-labelledby="tab-research">
+    <header class="banner">
+      <p class="eyebrow">Behavioral Sciences</p>
+      <h1>Research</h1>
+      <p class="sub">Resources for running a study, and what our students and faculty are presenting</p>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="Research">
+      <button class="tab" type="button" role="tab" id="tab-resources" aria-controls="panel-resources">Research Resources</button>
+      <button class="tab" type="button" role="tab" id="tab-activity" aria-controls="panel-activity">Research Activity</button>
+    </div>
+
+    <!-- Research Resources -->
+    <div class="panel" id="panel-resources" role="tabpanel" aria-labelledby="tab-resources">
+      <div class="callout">
+        <p class="callout-title">Note to Researchers</p>
+        <p>The IRB <strong>only</strong> accepts submissions directly from faculty. Students may <strong>not</strong> be Principal Investigator (PI). A faculty advisor/sponsor must <strong>always</strong> be listed as PI and submit the application. No exceptions!</p>
+      </div>
+
+      <h2>IRB</h2>
+      <p class="lead">Flagler's Institutional Review Board reviews all research with human participants for compliance with the federal Common Rule. Questions? Contact Dr. Angi Semegon at <a href="mailto:asemegon@flagler.edu">asemegon@flagler.edu</a>.</p>
+      <table class="res">
+        <thead><tr><th scope="col" class="col-res">Resource</th><th scope="col">About</th></tr></thead>
+        <tbody>
+          <tr><td class="name"><a href="https://www.flagler.edu/institutional-review-board-irb" target="_blank" rel="noopener">Flagler College IRB Website ↗</a></td><td data-label="About">Contacts, timelines, FAQs, and application forms.</td></tr>
+          <tr><td class="name"><a href="https://flagler.instructure.com/enroll/DWRC69" target="_blank" rel="noopener">IRB Canvas Course ↗</a></td><td data-label="About">Enroll here for the Human Subjects Ethics Training, sample consent forms, and a Word version of the application to draft before submitting online.</td></tr>
+          <tr><td class="name"><a href="https://flagler.instructure.com/courses/22011/pages/how-to-complete-flagler-college-ethics-training" target="_blank" rel="noopener">How to Complete Ethics Training ↗</a></td><td data-label="About">Step-by-step guide to finishing the required training.</td></tr>
+          <tr><td class="name"><a href="https://www.hhs.gov/ohrp/register-irbs-and-obtain-fwas/fwas/fwa-protection-of-human-subjecct/index.html" target="_blank" rel="noopener">Federalwide Assurance (FWA) ↗</a></td><td data-label="About">Federal requirement that all human-participants research be IRB-approved <strong>before</strong> recruitment or data collection begins.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Running a Study</h2>
+      <table class="res">
+        <thead><tr><th scope="col" class="col-res">Resource</th><th scope="col">About</th></tr></thead>
+        <tbody>
+          <tr><td class="name"><a href="https://flagler.sona-systems.com/Default.aspx?ReturnUrl=%2f" target="_blank" rel="noopener">Sona Systems ↗</a></td><td data-label="About">Flagler's research participation system. Sign up for studies or recruit participants.</td></tr>
+          <tr><td class="name"><a href="https://www.qualtrics.com" target="_blank" rel="noopener">Qualtrics ↗</a></td><td data-label="About">Survey platform for designing and distributing questionnaires. Available to Flagler students and faculty.</td></tr>
+          <tr><td class="name"><a href="https://jasp-stats.org" target="_blank" rel="noopener">JASP ↗</a></td><td data-label="About">Free, point-and-click statistics software designed for psychology.</td></tr>
+          <tr><td class="name"><a href="https://www.jamovi.org" target="_blank" rel="noopener">jamovi ↗</a></td><td data-label="About">Free statistics package for common analyses without coding.</td></tr>
+          <tr><td class="name"><a href="https://cran.r-project.org" target="_blank" rel="noopener">R ↗</a></td><td data-label="About">Open-source language for statistical computing and data visualization.</td></tr>
+          <tr><td class="name"><a href="https://www.python.org" target="_blank" rel="noopener">Python ↗</a></td><td data-label="About">Programming language for data science and advanced analysis.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Writing &amp; Library</h2>
+      <table class="res">
+        <thead><tr><th scope="col" class="col-res">Resource</th><th scope="col">About</th></tr></thead>
+        <tbody>
+          <tr><td class="name"><a href="https://library.flagler.edu" target="_blank" rel="noopener">Flagler Proctor Library ↗</a></td><td data-label="About">Scholarly articles, journals, books, and databases.</td></tr>
+          <tr><td class="name"><a href="https://apastyle.apa.org/products/publication-manual-7th-edition" target="_blank" rel="noopener">APA Manual ↗</a></td><td data-label="About">Official guide to APA style: citations, references, and formatting.</td></tr>
+          <tr><td class="name"><a href="https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_style_introduction.html" target="_blank" rel="noopener">Purdue OWL (APA) ↗</a></td><td data-label="About">Free APA examples for quick reference while writing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Research Activity -->
+    <div class="panel" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity">
+      <h2>Students</h2>
+      <h3 class="sub-h">Southeastern Psychological Association 2026 · New Orleans, LA</h3>
+      <table class="">
+        <thead><tr><th scope="col" class="col-stu">Student</th><th scope="col">Presentation</th><th scope="col" class="col-adv">Faculty Adviser</th><th scope="col" class="col-note">Recognition</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Carlie Buckler</td><td data-label="Title"><em>Caffeine consumption, stress, and well-being among college students</em><span class="role">Conference presentation</span></td><td data-label="Adviser">Dr. Angel Muñoz Gómez Andrade</td><td data-label="Notes"></td></tr>
+          <tr><td class="name">Shelby Kushner</td><td data-label="Title"><em>Not a buffer but a bridge: Regulatory emotional self-efficacy mediates the link between discrimination and psychological distress</em><span class="role">Conference presentation</span></td><td data-label="Adviser">Dr. Angel Muñoz Gómez Andrade</td><td data-label="Notes">Psi Chi Regional Research Award</td></tr>
+          <tr><td class="name">Daniel Silva</td><td data-label="Title"><em>A litmus test of legal legitimacy: Testing coercion and concealment of exculpatory evidence as predictors of fairness in plea bargaining</em><span class="role">Conference presentation</span></td><td data-label="Adviser">Dr. Keith Wylie</td><td data-label="Notes">Psi Chi travel grant</td></tr>
+          <tr><td class="name">Elena Macanche</td><td data-label="Title"><em>Extending research on race and the bystander effect: Hijabs as markers of group affiliation</em><span class="role">Conference presentation</span></td><td data-label="Adviser">Dr. Keith Wylie</td><td data-label="Notes"></td></tr>
+          <tr><td class="name">Jennavieve Jensen</td><td data-label="Title"><em>Experiences with sexual violence and the perception of risk</em><span class="role">Conference presentation</span></td><td data-label="Adviser">Dr. Keith Wylie</td><td data-label="Notes"></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-h">Southeastern Psychological Association 2025 · Atlanta, GA</h3>
+      <table class="">
+        <thead><tr><th scope="col" class="col-stu">Student</th><th scope="col">Presentation</th><th scope="col" class="col-adv">Faculty Adviser</th><th scope="col" class="col-note">Recognition</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Tyler Odabashian</td><td data-label="Title"><em>The self-reference effect in context: Exploring recall for positive and negative adjectives across self and other people-based referents</em><span class="role">Poster presentation</span></td><td data-label="Adviser">Dr. Angel Muñoz Gómez Andrade</td><td data-label="Notes">Psi Chi travel award; Flagler Undergraduate Research Office travel award</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Faculty</h2>
+      <table class="">
+        <thead><tr><th scope="col" class="col-stu">Faculty</th><th scope="col">Work</th><th scope="col" class="col-link"></th></tr></thead>
+        <tbody>
+          <tr><td class="name">Dr. Joshua Behl</td><td data-label="Work"><em>Psychology, Crime &amp; Law</em><span class="role">Peer-reviewed article</span></td><td data-label="Link"><a class="btn btn-sm" href="https://flagler.instructure.com/courses/22011/files/2886976?wrap=1" target="_blank" rel="noopener">Read PDF</a></td></tr>
+          <tr><td class="name">Dr. Jordan Bos, Dr. Jennifer Farmer &amp; Dr. Amelia Burkel</td><td data-label="Work">Exploring the impact of terrorist attacks on direct victims. <em>International Review of Victimology</em> (2025)<span class="role">Peer-reviewed article</span></td><td data-label="Link"><a class="btn btn-sm" href="https://flagler.instructure.com/courses/22011/files/2886978?wrap=1" target="_blank" rel="noopener">Read PDF</a></td></tr>
+          <tr><td class="name">Dr. Angel Muñoz</td><td data-label="Work">Memory development; Memory change in old age. <em>Essays in Developmental Psychology</em>, Vols. 126–127, Nova Southeastern University (2025)<span class="role">Encyclopedia entries</span></td><td data-label="Link"><a class="btn btn-sm" href="https://flagler.instructure.com/courses/22011/files/2670280?wrap=1" target="_blank" rel="noopener">Read PDF</a></td></tr>
+          <tr><td class="name">Dr. Angel Muñoz</td><td data-label="Work"><em>How to ADHD</em> (YouTube channel)<span class="role">Media appearance</span></td><td data-label="Link"><a class="btn btn-sm" href="https://www.youtube.com/watch?v=aAt6PqCMvjU" target="_blank" rel="noopener">Watch</a></td></tr>
+          <tr><td class="name">Dr. Keith Wylie</td><td data-label="Work">The effects of a single-session pictorial collage on self-reported anxiety of adults diagnosed with a traumatic brain injury. <em>The Arts in Psychotherapy, 92</em> (2025)<span class="role">Peer-reviewed article</span></td><td data-label="Link"><a class="btn btn-sm" href="https://flagler.instructure.com/courses/22011/files/2670272?wrap=1" target="_blank" rel="noopener">Read PDF</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================ SUPPORT ============================ -->
+  <section id="sec-support" role="tabpanel" aria-labelledby="tab-support">
+    <header class="banner">
+      <p class="eyebrow">Behavioral Sciences</p>
+      <h1>Support</h1>
+      <p class="sub">Campus offices that can help, from careers to wellness</p>
+    </header>
+    <table class="support">
+      <thead><tr><th scope="col" class="col-stu">Office</th><th scope="col">What they help with</th><th scope="col" class="col-links">Links</th></tr></thead>
+      <tbody>
+          <tr><td class="name">Career Development Center</td><td data-label="About">Support for grad school plans, internships and jobs, or deciding what's next. For students and alumni.</td><td data-label="Links"><div class="link-row"><a class="btn btn-sm" href="https://www.flagler.edu/student-life/career-development-center" target="_blank" rel="noopener">Website ↗</a></div></td></tr>
+          <tr><td class="name">Center for Global Education</td><td data-label="About">Study abroad opportunities. International students: questions about visas, employment, regulations, and compliance.</td><td data-label="Links"><div class="link-row"><a class="btn btn-sm" href="https://www.flagler.edu/academics/signature-programs/center-global-education" target="_blank" rel="noopener">Website ↗</a> <a class="btn btn-sm" href="https://www.flagler.edu/academics/signature-programs/center-global-education/study-abroad" target="_blank" rel="noopener">Study Abroad ↗</a> <a class="btn btn-sm" href="https://www.flagler.edu/academics/signature-programs/center-global-education/international-student-scholar-services" target="_blank" rel="noopener">International Students ↗</a></div></td></tr>
+          <tr><td class="name">Disability Resource Center</td><td data-label="About">Academic accommodations, personalized learning strategies, and assistive technology for students with disabilities.</td><td data-label="Links"><div class="link-row"><a class="btn btn-sm" href="https://www.flagler.edu/academics/academic-support/disability-resource-center" target="_blank" rel="noopener">Website ↗</a></div></td></tr>
+          <tr><td class="name">Health &amp; Wellness</td><td data-label="About">Counseling, case management, health services, outreach programs, and the CARE Team.</td><td data-label="Links"><div class="link-row"><a class="btn btn-sm" href="https://www.flagler.edu/student-life/health-wellness" target="_blank" rel="noopener">Website ↗</a> <a class="btn btn-sm" href="https://www.flagler.edu/student-life/health-wellness/health-services" target="_blank" rel="noopener">Health Services ↗</a> <a class="btn btn-sm" href="https://www.flagler.edu/student-life/health-wellness/counseling-services" target="_blank" rel="noopener">Counseling Center ↗</a> <a class="btn btn-sm" href="https://www.flagler.edu/student-life/health-wellness/wellness-education/wellness-resources" target="_blank" rel="noopener">Wellness Resources ↗</a> <a class="btn btn-sm" href="https://flagler.instructure.com/courses/19251/modules" target="_blank" rel="noopener">Canvas Site ↗</a></div></td></tr>
+          <tr><td class="name">Institutional Technology</td><td data-label="About">Computers, internet, printing, Flagler logins and passwords, and software help. Check what software is free through Flagler (e.g., Microsoft Office) and student tech discounts from Apple, Dell, and others.</td><td data-label="Links"><div class="link-row"><a class="btn btn-sm" href="https://www.flagler.edu/about/office-services/institutional-technology/institutional-technology" target="_blank" rel="noopener">Website ↗</a></div></td></tr>
+          <tr><td class="name">Learning Resource Center</td><td data-label="About">Free peer tutoring by Flagler students for Flagler students: one-on-one and small-group appointments, plus a place to study.</td><td data-label="Links"><div class="link-row"><a class="btn btn-sm" href="https://www.flagler.edu/academics/academic-support/academic-access-and-success/learning-resource-center-lrc" target="_blank" rel="noopener">Website ↗</a></div></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================ INTERNSHIPS ============================ -->
+  <section id="sec-internships" role="tabpanel" aria-labelledby="tab-internships">
+    <header class="banner">
+      <p class="eyebrow">Behavioral Sciences</p>
+      <h1>Internships</h1>
+      <p class="sub">Real-world experience for credit, through Flagler</p>
+    </header>
+    <p class="lead">Internships solve the classic dilemma: "Jobs require experience, but how do I get experience without a job?" You gain real-world practice, build your resume, and strengthen graduate applications.</p>
+
+    <h2>Requirements</h2>
+    <table class="kv">
+      <tbody>
+          <tr><td class="name">Credits</td><td data-label="Details">1–3 credit hours</td></tr>
+          <tr><td class="name">Eligibility</td><td data-label="Details">3.0 GPA and junior/senior standing</td></tr>
+          <tr><td class="name">Timeline</td><td data-label="Details">Most internships take 2–3 months to set up; some sites have fixed application windows.</td></tr>
+          <tr><td class="name">Start early</td><td data-label="Details">Ideally begin before pre-registration advising in the semester <em>before</em> your internship.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>How to Get Started</h2>
+    <table>
+      <thead><tr><th scope="col" class="col-stu">Program</th><th scope="col">Steps</th><th scope="col" class="col-contact">Contact</th></tr></thead>
+      <tbody>
+          <tr><td class="name">Criminology</td><td data-label="Steps">Email Dr. Josh Behl.</td><td data-label="Contact"><a href="mailto:jbehl@flagler.edu">jbehl@flagler.edu</a></td></tr>
+          <tr><td class="name">Psychology</td><td data-label="Steps">1. Download and complete the <a href="https://flagler.instructure.com/courses/22011/files/2853164?wrap=1" target="_blank" rel="noopener">Psychology Major Internship Interest Form</a>.<br>2. Email it to Dr. Angi Semegon.</td><td data-label="Contact"><a href="mailto:asemegon@flagler.edu">asemegon@flagler.edu</a></td></tr>
+          <tr><td class="name">Sociology</td><td data-label="Steps">Email Dr. Jen Melvin.</td><td data-label="Contact"><a href="mailto:jmelvin@flagler.edu">jmelvin@flagler.edu</a></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Why Do an Internship?</h2>
+    <ul class="focus">
+      <li><strong>Clarify interests and goals</strong>: test-drive career paths before investing time and money after graduation</li>
+      <li><strong>Develop professional skills</strong>: clinical, research, communication, and office skills that boost job readiness</li>
+      <li><strong>Build your network</strong>: supervisors and staff can become mentors and references</li>
+      <li><strong>Strengthen grad-school candidacy</strong>: supervisors can write strong recommendation letters and help with goal statements (Landrum &amp; Clark, 2005)</li>
+      <li><strong>Apply classroom learning</strong>: turn theories and methods into real-world practice</li>
+      <li><strong>Know your strengths</strong>: learn what you do well and what to develop next</li>
+    </ul>
+
+    <h2>Where Our Students Have Interned</h2>
+    <ul class="sites">
+        <li>ABA Connection</li>
+        <li>Adams Acres &amp; St. Augustine Group Homes</li>
+        <li>American Red Cross</li>
+        <li>ARC of St. Augustine</li>
+        <li>Betty Griffin House (domestic violence shelter)</li>
+        <li>Bird’s Nest Day School</li>
+        <li>Clay County Sheriff’s Office</li>
+        <li>Department of Juvenile Justice</li>
+        <li>Early Childhood Services (Head Start)</li>
+        <li>EPIC Behavioral Healthcare</li>
+        <li>Home Again</li>
+        <li>Jacksonville Sheriff’s Office</li>
+        <li>Kids Bridge</li>
+        <li>Private group counseling practices</li>
+        <li>St. Augustine Beach Police Department</li>
+        <li>St. Augustine Police Department</li>
+        <li>St. Augustine Youth Services (SAYS)</li>
+        <li>St. Johns County Sheriff’s Office</li>
+        <li>YMCA – Wellness &amp; Healthy Living</li>
+    </ul>
+
+    <h2>Student Testimonials</h2>
+    <blockquote class="quote">“I truly wish that every intern could have the same experience that I have had. It has changed my life in so many ways… The tools and skills I learned through this active observation and participation are so invaluable. But more importantly, I learned so much about myself.”<cite>Cameran McDivitt</cite></blockquote>
+    <blockquote class="quote">“My internship experience really helped me solidify what I want to do with my future… I feel much more prepared for the road ahead after graduation.”<cite>Caitlin Johnson</cite></blockquote>
+  </section>
+
+  <!-- ============================ ADVISING ============================ -->
+  <section id="sec-advising" role="tabpanel" aria-labelledby="tab-advising">
+    <header class="banner">
+      <p class="eyebrow">Behavioral Sciences</p>
+      <h1>Advising</h1>
+      <p class="sub">Prepare for your meeting, register, and find the right form or office</p>
+    </header>
+    <div class="callout">
+      <p class="callout-title">Version Note</p>
+      <p>This content is for <strong>Spring 2027</strong> registration. Advising opens <strong>Tuesday, September 29</strong>; registration runs <strong>October 20–29</strong>.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Advising">
+      <button class="tab" type="button" role="tab" id="tab-adv-prep" aria-controls="panel-adv-prep">Before Your Meeting</button>
+      <button class="tab" type="button" role="tab" id="tab-adv-meeting" aria-controls="panel-adv-meeting">During Your Meeting</button>
+      <button class="tab" type="button" role="tab" id="tab-adv-register" aria-controls="panel-adv-register">Registration</button>
+      <button class="tab" type="button" role="tab" id="tab-adv-forms" aria-controls="panel-adv-forms">Forms &amp; Contacts</button>
+    </div>
+    <div class="panel" id="panel-adv-prep" role="tabpanel" aria-labelledby="tab-adv-prep">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Obtain and review your Advising Worksheet</h3>
+          <p>Download your advising worksheet and check your progress toward your degree. Write down any issues, mistakes, or questions to bring to your advising meeting or email your advisor.</p>
+          <div class="btns"><a class="btn btn-sm" href="https://flagler.instructure.com/courses/22011/files/2857910?wrap=1" target="_blank" rel="noopener">Advising Worksheet Instructions ↗</a></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Develop a schedule</h3>
+          <p>Based on your worksheet, list the courses you need or want and draft a preliminary schedule to bring to your meeting. Look up course offerings in MyFlagler.</p>
+          <div class="btns"><a class="btn btn-sm" href="https://flagler.instructure.com/courses/22011/files/2857910?wrap=1" target="_blank" rel="noopener">Open Advising Worksheet ↗</a> <a class="btn btn-sm" href="https://my.flagler.edu/" target="_blank" rel="noopener">Go to MyFlagler ↗</a></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Set up an appointment with your advisor</h3>
+          <p>Advising opens Tuesday, September 29. Your advisor will reach out (contact them if you haven't heard from them) and follow their instructions to schedule a meeting. Find your advisor under <a href="#people">Faculty &amp; Staff</a>. Some advisors may ask you to complete the <a href="https://flagler.instructure.com/courses/22011/assignments/519842" target="_blank" rel="noopener">pre-advising quiz</a> first.</p>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="panel-adv-meeting" role="tabpanel" aria-labelledby="tab-adv-meeting">
+      <p class="lead">A suggested script for advisors and students.</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Review the Advising Worksheet together</h3>
+          <p>Students should review their worksheet before the meeting and bring a list of errors or concerns. Together, confirm that:</p>
+          <ul class="focus">
+            <li>All courses display correctly under the major, minor, and CORE requirements</li>
+            <li>Completed courses are counted properly and in the right place</li>
+            <li>Transfer credits or substitutions are reflected accurately</li>
+          </ul>
+          <p>If something is wrong, decide on the correction (e.g., course substitution or worksheet correction; see <a href="#adv-forms">Forms &amp; Contacts</a>) and next steps.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Check graduation progress &amp; milestones</h3>
+          <p>Confirm credits earned and remaining, catalog year, and any GPA/residency minimums. Then check time-sensitive milestones:</p>
+          <ul class="focus">
+            <li><strong>FlagSHIP</strong>: ideally completed by your second year; confirm it's planned or done and shows on the worksheet</li>
+            <li><strong>Co-curriculars</strong>: check your count and plan the rest; record them in Saints Connect (<a href="https://flagler.instructure.com/courses/22011/files/2850365?wrap=1" target="_blank" rel="noopener">instructions</a>)</li>
+            <li><strong>Application for Graduation</strong>: you're eligible at 60 credit hours, and it's due no later than the semester before you graduate (deadlines under <a href="#adv-register">Registration</a>)</li>
+          </ul>
+          <div class="btns"><a class="btn btn-sm" href="https://flagler.instructure.com/courses/24539" target="_blank" rel="noopener">FlagSHIP Canvas ↗</a> <a class="btn btn-sm" href="https://www.flagler.edu/saints-connect" target="_blank" rel="noopener">Saints Connect ↗</a> <a class="btn btn-sm" href="https://my.flagler.edu/ICS/Academics_Beta/Registrar_Office/Home.jnz?portlet=Student_Forms" target="_blank" rel="noopener">Application to Graduate ↗</a></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Program-specific courses &amp; requirements</h3>
+          <p>Review courses that could delay graduation if missed: fall- or spring-only courses, prerequisite chains, and capstone or methods courses.</p>
+          <table class="kv">
+            <tbody>
+              <tr><td class="name">Criminology</td><td data-label="Notes">No notes yet.</td></tr>
+              <tr><td class="name">Psychology</td><td data-label="Notes">Except Research in Experimental Psychology, any 340 or 440 course may count toward a major category (e.g., social, mental health) with approval from Dr. Litzinger, the department chair. Requests are reviewed case by case, with priority for extenuating circumstances (graduating this term, study abroad, double majors, medical emergencies, internship plans). Substitutions are not granted to avoid a class.</td></tr>
+              <tr><td class="name">Sociology</td><td data-label="Notes">Classical Theory: Fall, sophomore year<br>Research Methods: Fall, sophomore year<br>Social Stratification: Spring, junior/senior<br>Senior Seminar: Spring, senior. Requires 90 credit hours; some juniors may need to take it early, so contact Dr. Melvin (<a href="mailto:jmelvin@flagler.edu">jmelvin@flagler.edu</a>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Review the schedule &amp; select classes</h3>
+          <p>Build and review the upcoming schedule together. Check:</p>
+          <ul class="focus">
+            <li><strong>Prerequisites</strong>: met or in progress</li>
+            <li><strong>Special permissions</strong>: secure instructor or department approval early</li>
+            <li><strong>Time conflicts</strong>: no overlaps or unmanageable back-to-back classes</li>
+            <li><strong>Backup options</strong>: one or two alternatives in case classes fill</li>
+          </ul>
+          <div class="btns"><a class="btn btn-sm" href="https://my.flagler.edu/" target="_blank" rel="noopener">Look up courses in MyFlagler ↗</a></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Clear for registration &amp; confirm your window</h3>
+          <p>The advisor applies registration clearance. Then both of you verify nothing will block registration:</p>
+          <ul class="focus">
+            <li><strong>Holds</strong>: check MyFlagler for holds that block registration (AR, FS, GR; see <a href="#adv-register">Registration</a>) and resolve them</li>
+            <li><strong>Class standing</strong>: confirm FR/SO/JR/SR is correct; fix it right away if it's too low</li>
+            <li><strong>Registration time</strong>: confirm your date and time (CACE emails it on Monday, September 28). Questions? <a href="mailto:cace@flagler.edu">cace@flagler.edu</a>. Withdrawing from a course before registration can lower your credits and push back your date without notice.</li>
+            <li><strong>Part-time or withdrawing?</strong> Talk to Financial Aid first: federal loans may be reduced (see <a href="#adv-register">Registration</a>)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Advising beyond class selection</h3>
+          <p>Use the meeting to talk about bigger goals:</p>
+          <ul class="focus">
+            <li><strong>Community</strong>: clubs, organizations, and service. See <a href="#community">Community</a></li>
+            <li><strong>Development</strong>: careers, internships, grad school, and leadership. See <a href="#internships">Internships</a></li>
+            <li><strong>Research</strong>: independent and faculty-led projects and conferences. See <a href="#research">Research</a></li>
+            <li><strong>Support</strong>: campus resources. See <a href="#support">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="panel-adv-register" role="tabpanel" aria-labelledby="tab-adv-register">
+      <h2>Spring 2027 Registration Dates</h2>
+      <p class="lead">Registration runs Tuesday, October 20 – Thursday, October 29.</p>
+      <table>
+        <thead><tr><th scope="col" class="col-res">Date &amp; Time</th><th scope="col">Who / What</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Monday, September 28</td><td data-label="Who">CACE emails each student their registration day, time, and instructions</td></tr>
+          <tr><td class="name">Tuesday, September 29</td><td data-label="Who">Advising for Spring 2027 registration opens</td></tr>
+          <tr><td class="name">Tuesday, October 20, 5:00 PM</td><td data-label="Who">All Honors Program students, all athletes, Priority Registration Group (60+ anticipated earned credits)</td></tr>
+          <tr><td class="name">Tuesday, October 20, 7:00 PM</td><td data-label="Who">Students with 90+ anticipated earned credits</td></tr>
+          <tr><td class="name">Thursday, October 22, 7:00 PM</td><td data-label="Who">Students with 60–89 anticipated earned credits</td></tr>
+          <tr><td class="name">Tuesday, October 27, 5:00 PM</td><td data-label="Who">Priority Registration Group (0–59 anticipated earned credits)</td></tr>
+          <tr><td class="name">Tuesday, October 27, 7:00 PM</td><td data-label="Who">Students with 30–59 anticipated earned credits</td></tr>
+          <tr><td class="name">Thursday, October 29, 7:00 PM</td><td data-label="Who">Students with 0–29 anticipated earned credits</td></tr>
+        </tbody>
+      </table>
+
+      <h2>How to Register</h2>
+      <ol class="howto">
+        <li><strong>Accept the Registration Agreement.</strong> Log in to MyFlagler → <em>Add/Drop Courses</em>, set the term to <em>2026–2027 Spring Semester St. Augustine Day</em>, and accept the agreement.</li>
+        <li><strong>Add courses when your window opens.</strong> Log out and back in, open <em>Add/Drop Courses</em>, set the term, search for the courses on your plan, check the box, and click <em>Add Courses</em>. Repeat until your schedule is complete.</li>
+        <li><strong>Waitlist full classes.</strong> Add the class, then join the waitlist. If a seat opens you'll get a Flagler email and have 24 hours to respond. Keep a backup course so you stay full-time, and drop it if your waitlisted class opens.</li>
+      </ol>
+      <div class="btns"><a class="btn btn-sm" href="https://my.flagler.edu/" target="_blank" rel="noopener">Open MyFlagler ↗</a></div>
+
+      <h2>Help on Registration Days</h2>
+      <p class="lead">The Registrar and CACE are available until 8:00 PM on registration days. Your advisor must clear you first, and please don't send duplicate requests, which slows responses.</p>
+      <table class="kv">
+        <tbody>
+          <tr><td class="name">Registrar's Office</td><td data-label="Where">Seavey Cottage, 20 Valencia St. · <a href="mailto:registrar@flagler.edu">registrar@flagler.edu</a></td></tr>
+          <tr><td class="name">CACE</td><td data-label="Where">Proctor Library, 3rd floor · <a href="mailto:cace@flagler.edu">cace@flagler.edu</a></td></tr>
+        </tbody>
+      </table>
+
+      <h2>Holds That Block Registration</h2>
+      <table class="kv">
+        <tbody>
+          <tr><td class="name">AR Hold</td><td data-label="Meaning">Account balance over $1,000. Contact Student Accounts: <a href="mailto:studentaccounts@flagler.edu">studentaccounts@flagler.edu</a> · (904) 819-6230</td></tr>
+          <tr><td class="name">FS Hold</td><td data-label="Meaning">FlagSHIP enrollment or completion is delayed. Contact <a href="mailto:FlagSHIP@flagler.edu">FlagSHIP@flagler.edu</a></td></tr>
+          <tr><td class="name">GR Hold</td><td data-label="Meaning">Graduation hold for December degree candidates already cleared. Questions: <a href="mailto:registrar@flagler.edu">registrar@flagler.edu</a></td></tr>
+        </tbody>
+      </table>
+      <p class="note">Most other holds (including the AB Hold, a balance under $1,000) are warnings and don't block registration. Expand the alert in MyFlagler to see whether it's a warning or a hold and which office to contact.</p>
+
+      <h2>Part-Time Enrollment &amp; Federal Loans</h2>
+      <p class="lead">Starting July 1, 2026, if you have Federal Direct Loans and enroll in, drop, or withdraw to <strong>6–11 credit hours</strong>, your loans will be prorated. With <strong>1–5 credit hours</strong>, you're not eligible for federal loans. <strong>Before</strong> enrolling part-time, dropping to part-time, or withdrawing from a class, talk to Financial Aid about how it affects this term and next.</p>
+      <table class="kv">
+        <tbody>
+          <tr><td class="name">Financial Aid Office</td><td data-label="Contact">Hanke Hall, 2nd floor · <a href="mailto:Financialaid@flagler.edu">Financialaid@flagler.edu</a> · 904-819-6225</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Application for Graduation Deadlines</h2>
+      <p class="lead">Eligible once you've earned 60 credit hours; submit no later than the semester before you plan to graduate. The application sets your degree date and diploma name and covers honors and early-walker requests.</p>
+      <table>
+        <thead><tr><th scope="col" class="col-res">Application Due</th><th scope="col">Degree Conferral</th><th scope="col">Commencement Ceremony</th></tr></thead>
+        <tbody>
+          <tr><td class="name">May 1</td><td data-label="Conferral">December (same year)</td><td data-label="Ceremony">May (following year)</td></tr>
+          <tr><td class="name">November 1</td><td data-label="Conferral">May (following year)</td><td data-label="Ceremony">May (following year)</td></tr>
+          <tr><td class="name">November 1</td><td data-label="Conferral">August (following year)</td><td data-label="Ceremony">May (two years after applying)</td></tr>
+        </tbody>
+      </table>
+      <div class="btns"><a class="btn btn-sm" href="https://my.flagler.edu/ICS/Academics_Beta/Registrar_Office/Home.jnz?portlet=Student_Forms&amp;screen=Main&amp;screenType=next" target="_blank" rel="noopener">Apply for Graduation ↗</a> <a class="btn btn-sm" href="https://flagler.co1.qualtrics.com/jfe/form/SV_0IjwBemv90QvrTL" target="_blank" rel="noopener">Update an Existing Application ↗</a></div>
+
+    </div>
+    <div class="panel" id="panel-adv-forms" role="tabpanel" aria-labelledby="tab-adv-forms">
+      <h2>Frequently Used Forms &amp; Links</h2>
+      <ul class="sites forms">
+        <li><a href="https://flagler.co1.qualtrics.com/jfe/form/SV_09cXFZI27wEYHwF" target="_blank" rel="noopener">Academic Worksheet Correction ↗</a></li>
+        <li><a href="https://my.flagler.edu/ICS/Academics_Beta/Registrar_Office/Home.jnz?portlet=Student_Forms&amp;screen=Display+Intro&amp;screenType=next" target="_blank" rel="noopener">Application for Graduation ↗</a></li>
+        <li><a href="https://flagler.co1.qualtrics.com/jfe/form/SV_6FFS3o4KHyyCQbs" target="_blank" rel="noopener">Change of Advisor Request ↗</a></li>
+        <li><a href="https://flagler.co1.qualtrics.com/jfe/form/SV_cGS58N4I0DgDLP8" target="_blank" rel="noopener">Change of Major/Minor Request ↗</a></li>
+        <li><a href="https://flagler.instructure.com/courses/22011/files/2854846?wrap=1" target="_blank" rel="noopener">Course Substitution Request (PDF) ↗</a></li>
+        <li><a href="https://my.flagler.edu/ICS/icsfs/FERPA_Release.pdf?target=abae5f09-c964-4da4-90a5-efc5315f2d4f" target="_blank" rel="noopener">FERPA Release Form (PDF) ↗</a></li>
+        <li><a href="https://flagler.instructure.com/courses/22011/files/2854872?wrap=1" target="_blank" rel="noopener">Independent Study Request (PDF) ↗</a></li>
+        <li><a href="https://flagler.co1.qualtrics.com/jfe/form/SV_0IjwBemv90QvrTL" target="_blank" rel="noopener">Update an Existing Application for Graduation ↗</a></li>
+        <li><a href="https://www.flagler.edu/academics/academic-catalog/" target="_blank" rel="noopener">Academic Catalog ↗</a></li>
+        <li><a href="https://www.flagler.edu/academics/academic-calendar" target="_blank" rel="noopener">Academic Calendar ↗</a></li>
+        <li><a href="https://my.flagler.edu/ICS/Academics_Beta/Registrar_Office/Additional_Student_Forms.jnz?portlet=Additional_Student_Forms&amp;screen=FormView&amp;screenType=change&amp;form=5cd81d10-8d2a-4dd2-a806-1802b06bc7fa" target="_blank" rel="noopener">Single Class Withdrawal ↗</a></li>
+      </ul>
+
+      <h2>Resources &amp; Contacts</h2>
+      <h3 class="sub-h">Student Affairs</h3>
+      <table>
+        <thead><tr><th scope="col" class="col-res">Office</th><th scope="col">Helps with</th><th scope="col" class="col-contact">Email</th></tr></thead>
+        <tbody>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/student-life/career-development-center" target="_blank" rel="noopener">Career Development Center ↗</a><span class="role">Vernita Bowens</span></td><td data-label="Helps with">Resume/CV/LinkedIn workshops, mock interviews, internships, grad school prep</td><td data-label="Email"><a href="mailto:CareerDevelopment@flagler.edu">CareerDevelopment@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/student-life/health-wellness" target="_blank" rel="noopener">Health &amp; Wellness (Counseling) ↗</a><span class="role">Mary Tinlin</span></td><td data-label="Helps with">Anxiety, depression, substance concerns, grief, sleep, stress management</td><td data-label="Email"><a href="mailto:tinlinmc@flagler.edu">tinlinmc@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/signature-programs/center-global-education" target="_blank" rel="noopener">Center for Global Education ↗</a><span class="role">Jessica Howell</span></td><td data-label="Helps with">Study abroad, student visas, international/exchange support, cultural programming</td><td data-label="Email"><a href="mailto:InternationalCenter@flagler.edu">InternationalCenter@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/title-ix-policies-resources" target="_blank" rel="noopener">Title IX ↗</a><span class="role">Jess Kobryn</span></td><td data-label="Helps with">Discrimination/harassment resources, reporting, training, supportive measures</td><td data-label="Email"><a href="mailto:TitleIX@flagler.edu">TitleIX@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/student-life/campus-excellence-and-engagement" target="_blank" rel="noopener">Campus Excellence and Engagement ↗</a><span class="role">Jess Kobryn</span></td><td data-label="Helps with">Inclusive community initiatives, education, programming, student support</td><td data-label="Email"><a href="mailto:Diversity@flagler.edu">Diversity@flagler.edu</a></td></tr>
+        </tbody>
+      </table>
+      <h3 class="sub-h">Academic Affairs</h3>
+      <table>
+        <thead><tr><th scope="col" class="col-res">Office</th><th scope="col">Helps with</th><th scope="col" class="col-contact">Email</th></tr></thead>
+        <tbody>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/academic-support/academic-access-and-success/center-advising-and-core-experience" target="_blank" rel="noopener">Center for Advising &amp; Core Experience (CACE) ↗</a><span class="role">Jill Dawson</span></td><td data-label="Helps with">Change of major/minor, advising, academic plans, probation meetings</td><td data-label="Email"><a href="mailto:cace@flagler.edu">cace@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/academic-support/academic-access-and-success/learning-resource-center-lrc" target="_blank" rel="noopener">Learning Resource Center (LRC) ↗</a><span class="role">Lisa Van Zwoll</span></td><td data-label="Helps with">Tutoring, time management, study skills, Canvas help</td><td data-label="Email"><a href="mailto:learning@flagler.edu">learning@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/academic-support/academic-access-and-success/center-advising-and-core-experience/language" target="_blank" rel="noopener">Language Placement Tests ↗</a><span class="role">Catalina Quiroz</span></td><td data-label="Helps with">Info and registration for ASL and foreign language placement</td><td data-label="Email"><a href="mailto:cquiroz@flagler.edu">cquiroz@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/signature-programs/core-experience/flagship" target="_blank" rel="noopener">FlagSHIP ↗</a><span class="role">Brenda Kauffman</span></td><td data-label="Helps with">General questions and course offerings for FlagSHIP</td><td data-label="Email"><a href="mailto:FlagSHIP@flagler.edu">FlagSHIP@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/academic-support/disability-resource-center" target="_blank" rel="noopener">Disability Resource Center (DRC) ↗</a><span class="role">Phillip Pownall</span></td><td data-label="Helps with">Accommodations, support services, assistive technology</td><td data-label="Email"><a href="mailto:DisabilityServices@flagler.edu">DisabilityServices@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/academic-support/proctor-library" target="_blank" rel="noopener">Proctor Library ↗</a><span class="role">Trina McCowan</span></td><td data-label="Helps with">Gen Ed textbooks, research help, printing, laptop/calculator loans, interlibrary loan</td><td data-label="Email"><a href="mailto:library@flagler.edu">library@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/academics/academic-support/registrar" target="_blank" rel="noopener">Registrar ↗</a><span class="role">Nicholas Jobe</span></td><td data-label="Helps with">Transcripts, degree audits, address changes, graduation applications</td><td data-label="Email"><a href="mailto:registrar@flagler.edu">registrar@flagler.edu</a></td></tr>
+          <tr><td class="name"><a class="plain" href="https://www.flagler.edu/about/office-services/institutional-technology/institutional-technology" target="_blank" rel="noopener">Institutional Technology ↗</a><span class="role">Will Jackson</span></td><td data-label="Helps with">Residence hall tech, printing, file storage, login resets</td><td data-label="Email"><a href="mailto:support@flagler.edu">support@flagler.edu</a></td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-h">Financial Aid Counselors</h3>
+      <table>
+        <thead><tr><th scope="col" class="col-res">Name</th><th scope="col">Email</th><th scope="col" class="col-contact">Phone</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Gretta Lowry<span class="role">Financial Aid Counselor · Last names A–D</span></td><td data-label="Email"><a href="mailto:GLowry@flagler.edu">GLowry@flagler.edu</a></td><td data-label="Phone">904-826-8630</td></tr>
+          <tr><td class="name">Danta Walker<span class="role">Assistant Director of Financial Aid · Last names E–K · Veterans Affairs Certifying Official</span></td><td data-label="Email"><a href="mailto:DWalker@flagler.edu">DWalker@flagler.edu</a></td><td data-label="Phone">904-826-8545</td></tr>
+          <tr><td class="name">Annette Young<span class="role">Financial Aid Counselor · Last names L–Q</span></td><td data-label="Email"><a href="mailto:AYoung@flagler.edu">AYoung@flagler.edu</a></td><td data-label="Phone">904-819-6320</td></tr>
+          <tr><td class="name">Tierra Chandler<span class="role">Financial Aid Counselor · Last names R–Z</span></td><td data-label="Email"><a href="mailto:TChandler@flagler.edu">TChandler@flagler.edu</a></td><td data-label="Phone">904-826-8550</td></tr>
+          <tr><td class="name">Johanna Traverso<span class="role">Assistant Director, Financial Aid Data &amp; Operations</span></td><td data-label="Email"><a href="mailto:JTraverso@flagler.edu">JTraverso@flagler.edu</a></td><td data-label="Phone">904-819-6319</td></tr>
+          <tr><td class="name">Jennifer Pedicelli<span class="role">Associate Director of Financial Aid &amp; VA Certifying Official</span></td><td data-label="Email"><a href="mailto:JPedicelli@flagler.edu">JPedicelli@flagler.edu</a></td><td data-label="Phone">904-819-6321</td></tr>
+          <tr><td class="name">Sheia Pleasant<span class="role">Director of Financial Aid</span></td><td data-label="Email"><a href="mailto:SPleasant@flagler.edu">SPleasant@flagler.edu</a></td><td data-label="Phone">904-819-6435</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
 
 <script>
 /* ============================================================
-   EDIT HERE. Each person: name, role, email, office, hours.
-   Optional: linkedin (full URL).
+   COMMUNITY DIRECTORY. Each person: name, role, email, office, hours.
    Use "; " in hours to start a new line. Leave hours out to show nothing.
    Adjuncts can leave out office to get the default below.
    ============================================================ */
@@ -188,12 +854,8 @@ function row(p) {
   const email = p.email.includes("@") ? p.email : p.email + "@flagler.edu";
   const office = p.office || ADJ_OFFICE;
   const hours = (p.hours || "").split(";").map(h => esc(h.trim())).filter(Boolean).join("<br>");
-  const name = esc(p.name);
-  const li = p.linkedin
-    ? `<a class="li" href="${p.linkedin}" target="_blank" rel="noopener" aria-label="LinkedIn profile of ${esc(p.name)}">LinkedIn</a>`
-    : "";
   return `<tr>
-    <td class="name">${name}${li}<span class="role">${esc(p.role)}</span></td>
+    <td class="name">${esc(p.name)}<span class="role">${esc(p.role)}</span></td>
     <td data-label="Email"><a href="mailto:${email}">${email}</a></td>
     <td data-label="Office">${esc(office)}</td>
     <td data-label="Hours">${hours}</td>
@@ -212,54 +874,72 @@ function table(people) {
   </table>`;
 }
 
-const tabsEl = document.getElementById("tabs");
-const panelsEl = document.getElementById("panels");
-
+/* Build directory tabs */
+const dirTabs = document.getElementById("dir-tabs");
+const dirPanels = document.getElementById("dir-panels");
 DEPARTMENTS.forEach(d => {
   const btn = document.createElement("button");
   btn.className = "tab"; btn.type = "button";
   btn.id = "tab-" + d.id; btn.setAttribute("role", "tab");
   btn.setAttribute("aria-controls", "panel-" + d.id);
   btn.textContent = d.label;
-  btn.addEventListener("click", () => select(d.id, true));
-  tabsEl.appendChild(btn);
+  dirTabs.appendChild(btn);
 
-  const panel = document.createElement("section");
+  const panel = document.createElement("div");
   panel.className = "panel"; panel.id = "panel-" + d.id;
   panel.setAttribute("role", "tabpanel");
   panel.setAttribute("aria-labelledby", "tab-" + d.id);
   panel.innerHTML =
     (d.intro ? `<p class="intro">${esc(d.intro)}</p>` : "") +
     d.groups.map(g => (g.title ? `<h2>${esc(g.title)}</h2>` : "") + table(g.people)).join("");
-  panelsEl.appendChild(panel);
+  dirPanels.appendChild(panel);
 });
 
-function select(id, focus) {
-  DEPARTMENTS.forEach(d => {
-    const on = d.id === id;
-    const t = document.getElementById("tab-" + d.id);
-    t.setAttribute("aria-selected", on);
-    t.tabIndex = on ? 0 : -1;
-    document.getElementById("panel-" + d.id).hidden = !on;
-    if (on && focus) t.focus();
+/* Generic tabs: every [role=tablist] on the page, including the Community/Research switch */
+const allTabs = [];
+document.querySelectorAll('[role="tablist"]').forEach(list => {
+  const tabs = [...list.querySelectorAll('[role="tab"]')];
+  const select = (tab, focus) => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+  tabs.forEach(t => {
+    t._select = select;
+    allTabs.push(t);
+    t.addEventListener("click", () => {
+      select(t, true);
+      try { history.replaceState(null, "", "#" + t.id.replace(/^tab-/, "")); } catch (e) {}
+    });
   });
-  try { history.replaceState(null, "", "#" + id); } catch (e) {}
-}
-
-tabsEl.addEventListener("keydown", e => {
-  const ids = DEPARTMENTS.map(d => d.id);
-  const cur = ids.indexOf(document.activeElement.id.replace("tab-", ""));
-  if (cur < 0) return;
-  let next = null;
-  if (e.key === "ArrowRight") next = (cur + 1) % ids.length;
-  if (e.key === "ArrowLeft") next = (cur - 1 + ids.length) % ids.length;
-  if (e.key === "Home") next = 0;
-  if (e.key === "End") next = ids.length - 1;
-  if (next !== null) { e.preventDefault(); select(ids[next], true); }
+  list.addEventListener("keydown", e => {
+    const i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    const map = { ArrowRight: (i + 1) % tabs.length, ArrowLeft: (i - 1 + tabs.length) % tabs.length, Home: 0, End: tabs.length - 1 };
+    if (e.key in map) { e.preventDefault(); select(tabs[map[e.key]], true); }
+  });
+  select(tabs[0], false);
 });
 
-const start = location.hash.slice(1);
-select(DEPARTMENTS.some(d => d.id === start) ? start : DEPARTMENTS[0].id, false);
+/* Open from URL: #research, #psychology, #irb, #psy-research, etc.
+   Also opens whichever section contains that tab. */
+function openTab(t) {
+  while (t) {
+    t._select(t, false);
+    const panel = t.closest('[role="tabpanel"]');
+    t = panel ? allTabs.find(x => x.getAttribute("aria-controls") === panel.id) : null;
+  }
+}
+function openFromHash() {
+  const t = allTabs.find(t => t.id === "tab-" + location.hash.slice(1));
+  if (t) { openTab(t); window.scrollTo(0, 0); }
+}
+openFromHash();
+window.addEventListener("hashchange", openFromHash);
 </script>
 </body>
 </html>
