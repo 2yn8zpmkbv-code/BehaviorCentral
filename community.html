@@ -53,6 +53,12 @@
   .banner h1 { margin: 0; font-size: 2.2em; line-height: 1.1; font-weight: 800; letter-spacing: -0.01em; }
   .banner .sub { margin: 6px 0 0; opacity: 0.9; }
 
+  .site-banner { padding: 18px 22px 16px; margin-bottom: 12px; }
+  .site-banner h1 { font-size: 1.8em; }
+  .sec-head { margin: 4px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .sec-head h1 { margin: 0; font-size: 1.6em; font-weight: 800; color: var(--ink); }
+  .sec-head .sub { margin: 2px 0 0; color: var(--muted); }
+
   /* ---------- Tabs ---------- */
   .tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid #d9d9d9; margin-bottom: 16px; }
   .tab {
@@ -197,6 +203,12 @@
 <body>
 <div class="wrap">
 
+  <header class="banner site-banner">
+    <p class="eyebrow">Flagler College · Behavioral Sciences</p>
+    <h1>Behavior Central</h1>
+    <p class="sub">Your hub for Criminology, Psychology, and Sociology</p>
+  </header>
+
   <!-- Section switcher -->
   <div class="sitenav" role="tablist" aria-label="Sections">
     <button class="seg" type="button" role="tab" id="tab-home" aria-controls="sec-home">Home</button>
@@ -210,11 +222,6 @@
 
   <!-- ============================ HOME ============================ -->
   <section id="sec-home" role="tabpanel" aria-labelledby="tab-home">
-    <header class="banner">
-      <p class="eyebrow">Flagler College · Behavioral Sciences</p>
-      <h1>Behavior Central</h1>
-      <p class="sub">Your hub for Criminology, Psychology, and Sociology</p>
-    </header>
     <p class="lead">Welcome! Everything you need as a Behavioral Sciences student is here: advising and registration, who's who, ways to get involved, research, internships, and campus support. Pick a section to get started.</p>
 
     <div class="tiles">
@@ -261,8 +268,7 @@
 
   <!-- ============================ COMMUNITY ============================ -->
   <section id="sec-community" role="tabpanel" aria-labelledby="tab-community">
-    <header class="banner">
-      <p class="eyebrow">Behavioral Sciences</p>
+    <header class="sec-head">
       <h1>Community</h1>
       <p class="sub">Student organizations: get involved</p>
     </header>
@@ -321,8 +327,7 @@
 
   <!-- ============================ FACULTY & STAFF ============================ -->
   <section id="sec-people" role="tabpanel" aria-labelledby="tab-people">
-    <header class="banner">
-      <p class="eyebrow">Behavioral Sciences</p>
+    <header class="sec-head">
       <h1>Faculty &amp; Staff</h1>
       <p class="sub">Directory and office hours</p>
     </header>
@@ -332,8 +337,7 @@
 
   <!-- ============================ RESEARCH ============================ -->
   <section id="sec-research" role="tabpanel" aria-labelledby="tab-research">
-    <header class="banner">
-      <p class="eyebrow">Behavioral Sciences</p>
+    <header class="sec-head">
       <h1>Research</h1>
       <p class="sub">Resources for running a study, and what our students and faculty are presenting</p>
     </header>
@@ -425,8 +429,7 @@
 
   <!-- ============================ SUPPORT ============================ -->
   <section id="sec-support" role="tabpanel" aria-labelledby="tab-support">
-    <header class="banner">
-      <p class="eyebrow">Behavioral Sciences</p>
+    <header class="sec-head">
       <h1>Support</h1>
       <p class="sub">Campus offices that can help, from careers to wellness</p>
     </header>
@@ -445,8 +448,7 @@
 
   <!-- ============================ INTERNSHIPS ============================ -->
   <section id="sec-internships" role="tabpanel" aria-labelledby="tab-internships">
-    <header class="banner">
-      <p class="eyebrow">Behavioral Sciences</p>
+    <header class="sec-head">
       <h1>Internships</h1>
       <p class="sub">Real-world experience for credit, through Flagler</p>
     </header>
@@ -512,8 +514,7 @@
 
   <!-- ============================ ADVISING ============================ -->
   <section id="sec-advising" role="tabpanel" aria-labelledby="tab-advising">
-    <header class="banner">
-      <p class="eyebrow">Behavioral Sciences</p>
+    <header class="sec-head">
       <h1>Advising</h1>
       <p class="sub">Prepare for your meeting, register, and find the right form or office</p>
     </header>
