@@ -20,7 +20,7 @@
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px; line-height: 1.5;
   }
-  .wrap { max-width: 1000px; padding: 8px 12px 24px; }
+  .wrap { max-width: none; padding: 4px 2px 24px; }
   a { color: #2b2b2b; text-decoration-color: rgba(0,0,0,.28); text-underline-offset: 2px; }
   a:hover { text-decoration-color: currentColor; }
 
@@ -168,7 +168,9 @@
   a.plain:hover { text-decoration: underline; }
   section > .callout { margin-bottom: 14px; }
 
-  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin: 6px 0 8px; }
+  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); margin: 6px 0 8px; }
+  @media (max-width: 820px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .tiles { grid-template-columns: 1fr; } }
   .tile { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); text-decoration: none; transition: border-color .15s, box-shadow .15s; }
   .tile:hover { border-color: #cdb9b8; box-shadow: 0 3px 10px rgba(0,0,0,.06); }
   .tile-title { display: block; font-weight: 800; font-size: 1.05em; margin-bottom: 4px; }
