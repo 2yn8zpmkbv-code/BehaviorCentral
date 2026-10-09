@@ -306,13 +306,13 @@
     td[data-label] > .role { grid-column: 2; margin-top: -6px; }
   }
 
+  .wx { overflow: hidden; }
+  .wx-alert { border-top: 0; padding: 11px 16px 12px; }
   /* ================= Glass theme (overrides) ================= */
   :root { --glass: rgba(255,255,255,.62); --glass-border: rgba(255,255,255,.75); --wine: #7d2f2d; }
   body {
     background:
-      radial-gradient(900px 420px at 8% -120px, rgba(148,57,55,.10), transparent 70%),
-      radial-gradient(900px 420px at 100% -80px, rgba(110,140,220,.10), transparent 70%),
-      #fbfbfd;
+      linear-gradient(180deg, #f2f2f5 0, #fbfbfd 420px);
   }
   .glass, .site-strip, .sitenav, .wx, .widget {
     background: var(--glass);
@@ -321,13 +321,12 @@
     -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%);
   }
   /* Top strip: frosted with a wine wash, dark wine text */
-  .site-strip {
-    background:
-      linear-gradient(100deg, rgba(148,57,55,.20) 0%, rgba(148,57,55,.06) 45%, rgba(110,140,220,.10) 100%),
-      var(--glass);
-    color: var(--wine); border-radius: 16px;
-  }
-  .site-strip .strip-right { opacity: .75; }
+  .site-strip { background: rgba(255,255,255,.72); color: #1d1d1f; border-radius: 16px; padding-top: 12px; padding-bottom: 12px; text-transform: none; letter-spacing: 0; }
+  .site-strip .strip-sub, .site-strip .strip-right { letter-spacing: 0; text-transform: none; font-size: 0.95em; }
+  .site-strip .brand { font-weight: 800; letter-spacing: -0.015em; font-size: 1.3em; display: inline-flex; align-items: center; gap: 9px; }
+  .site-strip .brand::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #943937; box-shadow: 0 0 0 3px rgba(148,57,55,.12); }
+  .site-strip .strip-sep { color: #c7c7cc; opacity: 1; }
+  .site-strip .strip-sub, .site-strip .strip-right { color: #6e6e73; font-weight: 500; opacity: 1; }
   /* Menu: Apple-style segmented control */
   .sitenav { border-radius: 999px; padding: 5px; }
   .sitenav .seg { color: #3a3a3c; font-weight: 700; }
@@ -356,7 +355,6 @@
   </header>
 
   <div id="wx" class="wx" hidden>
-    <div id="wx-bar" class="wx-bar" hidden></div>
     <div id="wx-alert" class="wx-alert" role="alert" hidden></div>
   </div>
 
@@ -1356,32 +1354,12 @@ function openFinals() {
 openFinals(); window.addEventListener("hashchange", openFinals);
 
 /* ============================================================
-   WEATHER (St. Augustine campus). Free public data, no key needed:
-   Open-Meteo for conditions; National Weather Service for alerts.
-   If either service is unreachable, its piece simply stays hidden.
+   WEATHER ALERTS (St. Augustine campus). National Weather Service,
+   free, no key. Shows only when an alert is active; otherwise hidden.
    ============================================================ */
 (function () {
   const LAT = 29.8947, LON = -81.3145;
   const NWS_PAGE = `https://forecast.weather.gov/MapClick.php?lat=${LAT}&lon=${LON}`;
-  const CODES = { 0:"Clear", 1:"Mostly clear", 2:"Partly cloudy", 3:"Cloudy", 45:"Fog", 48:"Fog",
-    51:"Light drizzle", 53:"Drizzle", 55:"Heavy drizzle", 61:"Light rain", 63:"Rain", 65:"Heavy rain",
-    66:"Freezing rain", 67:"Freezing rain", 71:"Light snow", 73:"Snow", 75:"Heavy snow", 80:"Rain showers",
-    81:"Rain showers", 82:"Heavy showers", 95:"Thunderstorms", 96:"Thunderstorms", 99:"Severe thunderstorms" };
-
-  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&forecast_days=1`)
-    .then(r => r.ok ? r.json() : Promise.reject())
-    .then(d => {
-      const c = d.current, day = d.daily;
-      const el = document.getElementById("wx-bar");
-      el.innerHTML =
-        `<span class="wx-place">St. Augustine</span>` +
-        `<span class="wx-now">${Math.round(c.temperature_2m)}°F · ${esc(CODES[c.weather_code] || "—")}</span>` +
-        `<span class="wx-meta">H ${Math.round(day.temperature_2m_max[0])}° / L ${Math.round(day.temperature_2m_min[0])}°` +
-        (day.precipitation_probability_max ? ` · Rain ${day.precipitation_probability_max[0]}%` : "") +
-        ` · Wind ${Math.round(c.wind_speed_10m)} mph</span>` +
-        `<a href="${NWS_PAGE}" target="_blank" rel="noopener">Full forecast ↗</a>`;
-      el.hidden = false; document.getElementById("wx").hidden = false;
-    }).catch(() => {});
 
   fetch(`https://api.weather.gov/alerts/active?point=${LAT},${LON}`, { headers: { Accept: "application/geo+json" } })
     .then(r => r.ok ? r.json() : Promise.reject())
