@@ -269,6 +269,20 @@
   .wx-alert .wx-fine { display: block; margin-top: 3px; font-size: 0.88em; opacity: .85; }
   @media (max-width: 640px) { .wx-bar a { margin-left: 0; } .wx-alert .wx-item { white-space: normal; } .wx-alert a { margin-left: 8px; display: inline-block; } }
 
+  .deadline { position: relative; display: block; margin: 6px 0 16px; padding: 16px 20px; border-radius: 18px; overflow: hidden;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(148,57,55,.24) 0%, rgba(148,57,55,0) 60%),
+      radial-gradient(120% 140% at 100% 100%, rgba(110,140,220,.24) 0%, rgba(110,140,220,0) 60%),
+      rgba(255,255,255,.55);
+    border: 1px solid rgba(255,255,255,.7);
+    box-shadow: 0 8px 24px rgba(30,30,40,.08), 0 1px 2px rgba(30,30,40,.06), inset 0 1px 0 rgba(255,255,255,.9), inset 0 0 0 1px rgba(0,0,0,.04);
+    -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
+  .deadline::before { content: ""; position: absolute; inset: 0 0 50% 0; background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0)); pointer-events: none; }
+  .deadline > * { position: relative; }
+  .deadline-label { display: inline-block; font-size: 0.72em; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #6b2a28; background: rgba(255,255,255,.65); border: 1px solid rgba(148,57,55,.18); border-radius: 999px; padding: 3px 10px; }
+  .deadline-date { display: block; font-size: 1.7em; font-weight: 900; color: #1d1d1f; line-height: 1.2; margin-top: 8px; letter-spacing: -0.01em; }
+  .deadline-sub { display: block; color: #55555a; font-size: 0.95em; }
+
   /* ---------- Phones ---------- */
   @media (max-width: 640px) {
     .banner { padding: 20px 16px; }
@@ -291,6 +305,46 @@
     td:empty { display: none; }
     td[data-label] > .role { grid-column: 2; margin-top: -6px; }
   }
+
+  /* ================= Glass theme (overrides) ================= */
+  :root { --glass: rgba(255,255,255,.62); --glass-border: rgba(255,255,255,.75); --wine: #7d2f2d; }
+  body {
+    background:
+      radial-gradient(900px 420px at 8% -120px, rgba(148,57,55,.10), transparent 70%),
+      radial-gradient(900px 420px at 100% -80px, rgba(110,140,220,.10), transparent 70%),
+      #fbfbfd;
+  }
+  .glass, .site-strip, .sitenav, .wx, .widget {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 24px rgba(30,30,40,.06), 0 1px 2px rgba(30,30,40,.05), inset 0 1px 0 rgba(255,255,255,.9), inset 0 0 0 1px rgba(0,0,0,.035);
+    -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%);
+  }
+  /* Top strip: frosted with a wine wash, dark wine text */
+  .site-strip {
+    background:
+      linear-gradient(100deg, rgba(148,57,55,.20) 0%, rgba(148,57,55,.06) 45%, rgba(110,140,220,.10) 100%),
+      var(--glass);
+    color: var(--wine); border-radius: 16px;
+  }
+  .site-strip .strip-right { opacity: .75; }
+  /* Menu: Apple-style segmented control */
+  .sitenav { border-radius: 999px; padding: 5px; }
+  .sitenav .seg { color: #3a3a3c; font-weight: 700; }
+  .sitenav .seg:hover { color: var(--wine); background: rgba(255,255,255,.5); }
+  .sitenav .seg[aria-selected="true"] {
+    background: #fff; color: var(--wine);
+    box-shadow: 0 3px 10px rgba(30,30,40,.10), 0 1px 2px rgba(30,30,40,.08), inset 0 0 0 1px rgba(148,57,55,.14);
+  }
+  /* Section tabs: soft pills */
+  .tabs { border-bottom: 0; gap: 6px; }
+  .tab { border: 1px solid rgba(0,0,0,.08); border-radius: 999px; background: rgba(255,255,255,.7); color: #3a3a3c; padding: 7px 15px; }
+  .tab:hover { color: var(--wine); background: #fff; }
+  .tab[aria-selected="true"] { background: rgba(148,57,55,.10); color: var(--wine); border-color: rgba(148,57,55,.28); }
+  /* Cards */
+  .wx, .widget { border-radius: 16px; }
+  .widget table { background: rgba(255,255,255,.75); }
+  table.cal tr.now td:first-child::after { background: rgba(148,57,55,.12); color: var(--wine); border: 1px solid rgba(148,57,55,.25); }
 </style>
 </head>
 <body>
@@ -721,7 +775,7 @@
         <div class="step-num">3</div>
         <div class="step-body">
           <h3>Set up an appointment with your advisor</h3>
-          <p>Advising opens Tuesday, September 29. Your advisor will reach out (contact them if you haven't heard from them) and follow their instructions to schedule a meeting. Find your advisor under <a href="#people">Faculty &amp; Staff</a>. Some advisors may ask you to complete the <a href="https://flagler.instructure.com/courses/22011/assignments/519842" target="_blank" rel="noopener">pre-advising quiz</a> first.</p>
+          <p>Advising opens Tuesday, September 29. Your advisor will reach out (contact them if you haven't heard from them) and follow their instructions to schedule a meeting. Find your advisor under <a href="#people">Faculty &amp; Staff</a>. Some advisors may ask you to complete the <a href="https://flagler.instructure.com/courses/22011/assignments/576232" target="_blank" rel="noopener">pre-advising quiz</a> first.</p>
         </div>
       </div>
     </div>
@@ -861,15 +915,12 @@
       </table>
 
       <h2>Application for Graduation Deadlines</h2>
+      <div class="deadline">
+        <span class="deadline-label">This semester's deadline</span>
+        <span class="deadline-date">Thursday, October 15, 2026</span>
+        <span class="deadline-sub">for students graduating in May 2027</span>
+      </div>
       <p class="lead">Eligible once you've earned 60 credit hours; submit no later than the semester before you plan to graduate. The application sets your degree date and diploma name and covers honors and early-walker requests.</p>
-      <table>
-        <thead><tr><th scope="col" class="col-res">Application Due</th><th scope="col">Degree Conferral</th><th scope="col">Commencement Ceremony</th></tr></thead>
-        <tbody>
-          <tr><td class="name">May 1</td><td data-label="Conferral">December (same year)</td><td data-label="Ceremony">May (following year)</td></tr>
-          <tr><td class="name">November 1</td><td data-label="Conferral">May (following year)</td><td data-label="Ceremony">May (following year)</td></tr>
-          <tr><td class="name">November 1</td><td data-label="Conferral">August (following year)</td><td data-label="Ceremony">May (two years after applying)</td></tr>
-        </tbody>
-      </table>
       <div class="btns"><a class="btn btn-sm" href="https://my.flagler.edu/ICS/Academics_Beta/Registrar_Office/Home.jnz?portlet=Student_Forms&amp;screen=Main&amp;screenType=next" target="_blank" rel="noopener">Apply for Graduation ↗</a> <a class="btn btn-sm" href="https://flagler.co1.qualtrics.com/jfe/form/SV_0IjwBemv90QvrTL" target="_blank" rel="noopener">Update an Existing Application ↗</a></div>
 
     </div>
