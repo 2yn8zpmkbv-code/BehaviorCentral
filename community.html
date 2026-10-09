@@ -307,7 +307,16 @@
   }
 
   .wx { overflow: hidden; }
-  .wx-alert { border-top: 0; padding: 11px 16px 12px; }
+  .wx-alert { border-top: 0; padding: 12px 16px 12px; font-size: 0.92em; line-height: 1.45; }
+  .wx-alert .wx-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+  .wx-alert .wx-title { font-weight: 900; font-size: 0.8em; letter-spacing: .06em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; }
+  .wx-alert .wx-title::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+  .wx-alert .wx-top a { margin: 0; font-size: 0.88em; font-weight: 700; white-space: nowrap; display: inline; }
+  .wx-alert .wx-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; }
+  .wx-alert .wx-list li { display: flex; flex-wrap: wrap; gap: 0 6px; align-items: baseline; }
+  .wx-alert .wx-until { opacity: .8; }
+  .wx-alert .wx-fine { margin: 8px 0 0; font-size: 0.85em; opacity: .75; }
+  @media (max-width: 640px) { .wx-alert .wx-list { flex-direction: column; gap: 4px; } }
   /* ================= Glass theme (overrides) ================= */
   :root { --glass: rgba(255,255,255,.62); --glass-border: rgba(255,255,255,.75); --wine: #7d2f2d; }
   body { background: linear-gradient(180deg, #fbfbfc 0, #fefeff 420px); }
@@ -1363,20 +1372,26 @@ openFinals(); window.addEventListener("hashchange", openFinals);
   fetch(`https://api.weather.gov/alerts/active?point=${LAT},${LON}`, { headers: { Accept: "application/geo+json" } })
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(d => {
-      const alerts = (d.features || []).map(f => f.properties).filter(p => p && p.event);
-      if (!alerts.length) return;
-      const severe = alerts.some(p => /Hurricane|Tropical Storm|Storm Surge|Tornado|Evacuation|Extreme Wind/i.test(p.event));
+      const SKIP = /Marine|Small Craft|Gale|Hazardous Seas|Coastal Waters|Brisk Wind|Special Marine/i;  // boating-only alerts
+      const SEVERE = /Hurricane|Tropical Storm|Storm Surge|Tornado|Evacuation|Extreme Wind/i;
       const seen = new Set();
-      const items = alerts.filter(p => !seen.has(p.event) && seen.add(p.event)).slice(0, 4).map(p => {
+      const alerts = (d.features || []).map(f => f.properties)
+        .filter(p => p && p.event && !SKIP.test(p.event) && !seen.has(p.event) && seen.add(p.event))
+        .sort((x, y) => SEVERE.test(y.event) - SEVERE.test(x.event));
+      if (!alerts.length) return;
+      const severe = alerts.some(p => SEVERE.test(p.event));
+      const fmt = t => new Date(t).toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+      const items = alerts.slice(0, 4).map(p => {
         const until = p.ends || p.expires;
-        const t = until ? " until " + new Date(until).toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "";
-        return `<span class="wx-item"><strong>${esc(p.event)}</strong>${esc(t)}</span>`;
+        return `<li><strong>${esc(p.event)}</strong>${until ? `<span class="wx-until">until ${esc(fmt(until))}</span>` : ""}</li>`;
       }).join("");
       const el = document.getElementById("wx-alert");
       el.className = "wx-alert" + (severe ? " severe" : "");
-      el.innerHTML = `<span class="wx-head">⚠ Alerts:</span>${items}` +
-        `<a href="${NWS_PAGE}" target="_blank" rel="noopener">Details ↗</a>` +
-        `<span class="wx-fine">For closures and class cancellations, follow official Flagler College announcements.</span>`;
+      el.innerHTML =
+        `<div class="wx-top"><span class="wx-title">Weather alerts · St. Augustine</span>` +
+        `<a href="${NWS_PAGE}" target="_blank" rel="noopener">Details</a></div>` +
+        `<ul class="wx-list">${items}</ul>` +
+        `<p class="wx-fine">For closures and class cancellations, follow official Flagler College announcements.</p>`;
       el.hidden = false; document.getElementById("wx").hidden = false;
     }).catch(() => {});
 })();
