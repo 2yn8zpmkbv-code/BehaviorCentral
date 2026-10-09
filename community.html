@@ -14,7 +14,7 @@
     --ink: #222;
     --muted: #5a5a5a;
     --line: #e4e4e4;
-    --stripe: #faf6f6;
+    --stripe: #f7f7f7;
     --bg: #ffffff;
   }
   * { box-sizing: border-box; }
@@ -30,7 +30,7 @@
   /* ---------- Section switcher (Community / Research) ---------- */
   .sitenav {
     display: flex; gap: 4px; padding: 4px; margin-bottom: 18px;
-    background: #f1ecec; border-radius: 999px;
+    background: #f1f1f1; border-radius: 999px;
   }
   .sitenav .seg {
     appearance: none; border: 0; background: transparent; cursor: pointer;
@@ -61,6 +61,8 @@
     border-radius: 10px; padding: 10px 18px; margin-bottom: 12px;
     font-size: 0.82em; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .strip-right { opacity: .8; }
+  .brand { font-size: 1.25em; letter-spacing: .06em; font-weight: 900; }
+  .strip-sep { opacity: .5; margin: 0 6px; font-weight: 400; }
   .sec-head { margin: 4px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
   .sec-head h1 { margin: 0; font-size: 1.6em; font-weight: 900; color: var(--ink); }
   .sec-head .sub { margin: 2px 0 0; color: var(--muted); }
@@ -80,7 +82,7 @@
   .intro { margin: 0 0 12px; font-weight: 600; }
   h2 {
     margin: 26px 0 10px; padding: 4px 10px;
-    border-left: 3px solid #d8c7c6; color: var(--ink); font-size: 1.15em;
+    border-left: 3px solid #d4d4d4; color: var(--ink); font-size: 1.15em;
   }
   .panel > h2:first-child, .panel > .intro + h2 { margin-top: 0; }
   h2 + h3.sub-h { margin-top: 4px !important; }
@@ -98,7 +100,7 @@
   .col-name { width: 32%; } .col-email { width: 26%; } .col-office { width: 18%; }
 
   /* ---------- Cards, buttons ---------- */
-  .callout { border-left: 3px solid #d8c7c6; background: var(--stripe); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
+  .callout { border-left: 3px solid #d4d4d4; background: var(--stripe); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
   .callout p { margin: 0; }
   .callout-title { color: var(--ink); font-weight: 900; font-size: 1.1em; margin-bottom: 4px !important; }
   .prose p { margin: 0 0 10px; }
@@ -146,7 +148,7 @@
   .btn-sm { padding: 4px 10px; font-size: 0.82em; white-space: nowrap; }
   table + h3.sub-h, table + h2 { margin-top: 26px; }
 
-  .block-head { margin: 48px 0 14px; padding-top: 22px; border-top: 1px solid #e3d6d5; }
+  .block-head { margin: 48px 0 14px; padding-top: 22px; border-top: 1px solid #e3e3e3; }
   .block-head .eyebrow { margin: 0 0 2px; font-size: 0.75em; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   .block-title { margin: 0; padding: 0; border: 0; font-size: 1.6em; font-weight: 900; color: var(--ink); }
   .club-name { margin: 0 0 6px; font-weight: 900; font-size: 1.1em; }
@@ -163,13 +165,13 @@
   .col-contact { width: 26%; }
   ul.sites { columns: 3 220px; column-gap: 24px; margin: 0; padding-left: 18px; }
   ul.sites li { break-inside: avoid; margin-bottom: 4px; }
-  .quote { margin: 0 0 12px; padding: 12px 16px; border-left: 3px solid #d8c7c6; background: var(--stripe); border-radius: 6px; font-style: italic; }
+  .quote { margin: 0 0 12px; padding: 12px 16px; border-left: 3px solid #d4d4d4; background: var(--stripe); border-radius: 6px; font-style: italic; }
   .quote cite { display: block; margin-top: 6px; font-style: normal; font-weight: 700; font-size: 0.9em; }
   .quote cite::before { content: "— "; }
 
   .step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .step:last-child { border-bottom: 0; }
-  .step-num { flex: 0 0 30px; height: 30px; border-radius: 50%; background: #f1ecec; color: var(--ink); font-weight: 900; display: grid; place-items: center; font-size: 0.95em; }
+  .step-num { flex: 0 0 30px; height: 30px; border-radius: 50%; background: #f1f1f1; color: var(--ink); font-weight: 900; display: grid; place-items: center; font-size: 0.95em; }
   .step-body { flex: 1; min-width: 0; }
   .step-body h3 { margin: 3px 0 6px; font-size: 1.05em; }
   .step-body p { margin: 0 0 8px; }
@@ -185,22 +187,88 @@
   .tiles { display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); margin: 6px 0 8px; }
   @media (max-width: 820px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .tiles { grid-template-columns: 1fr; } }
-  .tile { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); text-decoration: none; transition: border-color .15s, box-shadow .15s; }
-  .tile:hover { border-color: #cdb9b8; box-shadow: 0 3px 10px rgba(0,0,0,.06); }
-  .tile-title { display: block; font-weight: 900; font-size: 1.12em; margin-bottom: 4px; }
-  .tile-desc { display: block; font-size: 0.96em; color: var(--muted); }
+  .tile { display: block; padding: 16px 18px; border: 1px solid #e3e3e3; border-radius: 10px; background: #ffffff; color: var(--ink); text-decoration: none; transition: background .15s, box-shadow .15s, transform .15s; }
+  .tile:hover { background: #f3f3f3; box-shadow: 0 3px 10px rgba(0,0,0,.06); transform: translateY(-1px); }
+  .tile:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+  .tile-title { display: block; color: #2f2a2a; font-weight: 900; font-size: 1.12em; margin-bottom: 4px; }
+  .tile-desc { display: block; font-size: 0.96em; color: #4a4a4a; }
 
   .site-foot { margin-top: 36px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.88em; color: var(--muted); }
+
+  .widget { margin: 6px 0 22px; padding: 16px 18px 12px; border: 1px solid #e3e3e3; border-radius: 12px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .widget-title { margin: 0 0 10px; padding: 0; border: 0; font-size: 1.2em; color: var(--ink); }
+  .widget .tabs { margin-bottom: 8px; }
+  .widget table { background: #fff; border-radius: 8px; overflow: hidden; }
+  .widget tbody tr:nth-child(even) { background: #fafafa; }
+  table.cal td { padding: 7px 10px; }
+  .cal-date { width: 30%; white-space: nowrap; }
+  .cal-time { color: var(--muted); font-size: 0.9em; white-space: nowrap; }
+  table.cal tr.past td, table.cal tr.past .cal-time { color: #a3a3a3; }
+  .widget:not(.show-past) tr.past, .widget:not(.show-past) .all-past { display: none; }
+  #toggle-past { margin: 4px 0 2px; }
+  table.cal tr.past td a { color: #a3a3a3; }
+  table.cal tr.now td:first-child::after { content: "Now"; margin-left: 8px; padding: 1px 7px; border-radius: 999px; background: var(--maroon); color: #fff; font-size: 0.72em; font-weight: 700; vertical-align: 2px; }
+  .widget h3.sub-h { margin: 14px 0 6px; font-size: 0.85em; }
+  .widget .panel > h3.sub-h:first-child { margin-top: 4px; }
+  @media (max-width: 640px) {
+    .strip-right, .strip-sep { display: none; }
+    .strip-sub { display: block; font-size: 0.85em; opacity: .85; margin-top: 2px; }
+    .widget { padding: 12px 10px 8px; }
+    table.cal tbody tr { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 8px 6px; margin: 0; }
+    table.cal td, table.cal td.name { display: block; width: auto; padding: 0; font-size: 1em; }
+    table.cal td::before { content: none !important; }
+    table.cal .cal-date { white-space: normal; font-size: 0.92em; }
+    table.exam { display: table; font-size: 0.9em; }
+    table.exam thead { position: static; width: auto; height: auto; overflow: visible; clip: auto; display: table-header-group; }
+    table.exam tbody { display: table-row-group; }
+    table.exam tr { display: table-row; width: auto; border: 0; border-radius: 0; padding: 0; margin: 0; }
+    table.exam tbody tr:nth-child(even) { background: #fafafa !important; }
+    table.exam td, table.exam td.name, table.exam th { width: auto; white-space: nowrap; }
+    table.exam td, table.exam td.name { display: table-cell; padding: 6px 6px; border-bottom: 1px solid var(--line); font-size: 1em; }
+    table.exam td::before { content: none !important; }
+    table.exam th { padding: 6px; }
+  }
+
+  details.cal-widget > summary { cursor: pointer; list-style: none; font-weight: 900; display: flex; align-items: center; gap: 10px; margin: 0; }
+  details.cal-widget > summary::-webkit-details-marker { display: none; }
+  details.cal-widget > summary::before { content: "▸"; font-size: 0.9em; color: var(--muted); transition: transform .15s; }
+  details.cal-widget[open] > summary::before { transform: rotate(90deg); }
+  details.cal-widget[open] > summary { margin-bottom: 12px; }
+  .sum-hint { margin-left: auto; font-size: 0.72em; font-weight: 700; color: var(--muted); border: 1px solid #d4d4d4; border-radius: 999px; padding: 2px 10px; }
+  details.cal-widget[open] .sum-hint { display: none; }
+  details.cal-widget > summary:focus-visible { outline: 3px solid #f2b705; outline-offset: 4px; border-radius: 6px; }
+
+  table.exam th:first-child { width: 30%; }
+  table.exam td { padding: 7px 10px; }
+
+  .crumbs { font-size: 0.86em; color: var(--muted); margin: -6px 0 14px 4px; }
+  .crumbs a { color: var(--muted); }
+  .crumbs .sep { margin: 0 6px; opacity: .6; }
+  .crumbs .cur { color: var(--ink); font-weight: 700; }
+  .quick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 18px; }
+  .quick-label { font-size: 0.85em; font-weight: 700; color: var(--muted); margin-right: 2px; }
+  .chip { display: inline-block; padding: 5px 12px; border: 1px solid #d4d4d4; border-radius: 999px; background: #fff; color: var(--ink); text-decoration: none; font-size: 0.9em; font-weight: 600; }
+  .chip:hover { border-color: var(--maroon); color: var(--maroon); }
+  .chip:focus-visible { outline: 3px solid #f2b705; outline-offset: 2px; }
+
+  .widget-desc { margin: -4px 0 10px; color: var(--muted); font-size: 0.92em; }
+  .sum-desc { display: block; font-weight: 400; font-size: 0.78em; color: var(--muted); margin-top: 2px; }
 
   /* ---------- Phones ---------- */
   @media (max-width: 640px) {
     .banner { padding: 20px 16px; }
     .banner h1 { font-size: 1.8em; }
-    .sitenav { display: flex; flex-wrap: wrap; border-radius: 14px; }
-    .sitenav .seg { flex: 1 1 auto; padding: 8px 12px; }
+    /* One-row, swipeable menus on phones */
+    .sitenav, .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+    .sitenav::-webkit-scrollbar, .tabs::-webkit-scrollbar { display: none; }
+    .sitenav { border-radius: 999px; }
+    .sitenav .seg { flex: 0 0 auto; padding: 8px 14px; scroll-snap-align: start; }
+    .tabs { gap: 6px; border-bottom: 0; padding-bottom: 2px; margin-bottom: 14px; }
+    .tab { flex: 0 0 auto; border: 1px solid #d9d9d9; border-radius: 999px; padding: 7px 14px; font-size: 0.92em; background: #fff; scroll-snap-align: start; }
+    .tab[aria-selected="true"] { border-color: var(--maroon); }
     thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     table, tbody, tr, td { display: block; width: 100%; }
-    tbody tr { border: 1px solid var(--line); border-left: 3px solid #d8c7c6; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; background: #fff !important; }
+    tbody tr { border: 1px solid var(--line); border-left: 3px solid #d4d4d4; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; background: #fff !important; }
     td { border: none; padding: 2px 0; display: grid; grid-template-columns: 84px 1fr; gap: 8px; }
     td::before { content: attr(data-label); color: var(--muted); font-size: 0.8em; font-weight: 700; padding-top: 2px; }
     td.name { display: block; padding-bottom: 6px; font-size: 1.05em; }
@@ -214,7 +282,7 @@
 <div class="wrap">
 
   <header class="site-strip">
-    <span class="strip-left">Flagler College · Behavioral Sciences</span>
+    <span class="strip-left"><span class="brand">Behavior Central</span> <span class="strip-sep">|</span> <span class="strip-sub">Flagler College · Behavioral Sciences</span></span>
     <span class="strip-right">Criminology · Psychology · Sociology</span>
   </header>
 
@@ -229,47 +297,86 @@
     <button class="seg" type="button" role="tab" id="tab-support" aria-controls="sec-support">Support</button>
   </div>
 
+  <nav class="crumbs" aria-label="You are here" id="crumbs"></nav>
+
   <!-- ============================ HOME ============================ -->
   <section id="sec-home" role="tabpanel" aria-labelledby="tab-home">
-    <p class="lead">Welcome! Everything you need as a Behavioral Sciences student is here: advising and registration, who's who, ways to get involved, research, internships, and campus support. Pick a section to get started.</p>
+    <p class="lead">Welcome to <strong>Behavior Central</strong>, the home base for Criminology, Psychology, and Sociology students. Below are this semester's key dates. For everything else, use the menu above.</p>
 
-    <div class="tiles">
-      <a class="tile" href="#advising">
-        <span class="tile-title">Advising <span aria-hidden="true">→</span></span>
-        <span class="tile-desc">Prepare for your advising meeting, register for classes, and find forms.</span>
-      </a>
-      <a class="tile" href="#people">
-        <span class="tile-title">Faculty &amp; Staff <span aria-hidden="true">→</span></span>
-        <span class="tile-desc">Directory, offices, and office hours for Criminology, Psychology, and Sociology.</span>
-      </a>
-      <a class="tile" href="#community">
-        <span class="tile-title">Community <span aria-hidden="true">→</span></span>
-        <span class="tile-desc">Psi Chi, the Psychology Club, and Alpha Kappa Delta: get involved.</span>
-      </a>
-      <a class="tile" href="#research">
-        <span class="tile-title">Research <span aria-hidden="true">→</span></span>
-        <span class="tile-desc">IRB, Sona Systems, research tools, and student and faculty work.</span>
-      </a>
-      <a class="tile" href="#internships">
-        <span class="tile-title">Internships <span aria-hidden="true">→</span></span>
-        <span class="tile-desc">Requirements, how to get started, and where students have interned.</span>
-      </a>
-      <a class="tile" href="#support">
-        <span class="tile-title">Support <span aria-hidden="true">→</span></span>
-        <span class="tile-desc">Campus offices for careers, wellness, tutoring, technology, and more.</span>
-      </a>
+    <div class="widget">
+      <h2 class="widget-title">Coming Up</h2>
+      <p class="widget-desc">The next important dates from the academic calendar. This list updates automatically as dates pass.</p>
+      <table class="cal">
+        <tbody id="coming-up"></tbody>
+      </table>
     </div>
 
-    <h2>Coming Up</h2>
-    <table class="kv">
-      <tbody>
-        <tr><td class="name">Mon–Tue, October 12–13</td><td data-label="What">Fall Break (classes canceled)</td></tr>
-        <tr><td class="name">Thu, October 15</td><td data-label="What">Graduation Application deadline for May 2027 graduates. <a href="#adv-register">Graduation details</a></td></tr>
-        <tr><td class="name">Sat, October 17</td><td data-label="What">Campus Visit Day</td></tr>
-        <tr><td class="name">Tue–Thu, October 20–29</td><td data-label="What">Registration for Spring 2027. Check your registration time in your CACE email, and meet with your advisor before your window opens. <a href="#adv-register">Registration details</a></td></tr>
-        <tr><td class="name">Thu, October 29, 5:00 PM</td><td data-label="What">Last day to withdraw from a course with a W</td></tr>
-      </tbody>
-    </table>
+    <details class="widget cal-widget">
+      <summary class="widget-title"><span>Full Academic Calendar 2026–2027<span class="sum-desc">Every date for Fall, Spring, and Summer: breaks, deadlines, holidays, and more.</span></span><span class="sum-hint">Show</span></summary>
+      <div class="tabs" role="tablist" aria-label="Academic calendar terms">
+        <button class="tab" type="button" role="tab" id="tab-cal-fall" aria-controls="panel-cal-fall">Fall 2026</button>
+        <button class="tab" type="button" role="tab" id="tab-cal-spring" aria-controls="panel-cal-spring">Spring 2027</button>
+        <button class="tab" type="button" role="tab" id="tab-cal-summer" aria-controls="panel-cal-summer">Summer 2027</button>
+      </div>
+      <div class="panel" id="panel-cal-fall" role="tabpanel" aria-labelledby="tab-cal-fall"></div>
+      <div class="panel" id="panel-cal-spring" role="tabpanel" aria-labelledby="tab-cal-spring"></div>
+      <div class="panel" id="panel-cal-summer" role="tabpanel" aria-labelledby="tab-cal-summer"></div>
+      <button class="btn btn-sm" type="button" id="toggle-past" aria-pressed="false">Show past dates</button>
+      <p class="note">All dates are subject to change. Source: <a href="https://www.flagler.edu/academics/academic-calendar" target="_blank" rel="noopener">Flagler College Academic Calendar ↗</a> (updated 12/4/2025). </p>
+    </details>
+
+    <details class="widget cal-widget" id="finals">
+      <summary class="widget-title"><span>Fall 2026 Final Exam Schedule<span class="sum-desc">Find your exam day and time based on when your class meets.</span></span><span class="sum-hint">Show</span></summary>
+      <p class="lead">Find the time your class <strong>starts</strong> and the days it meets. Finals run Monday, December 7 – Thursday, December 10. Exams are held in your regular classroom.</p>
+      <h3 class="sub-h">Classes meeting M, W, F, MW, MF, WF, or MWF</h3>
+      <table class="exam">
+        <thead><tr><th scope="col">Class starts</th><th scope="col">Exam day</th><th scope="col">Exam time</th></tr></thead>
+        <tbody>
+          <tr><td class="name">8:00 AM</td><td data-label="Exam day">Mon, Dec 7</td><td data-label="Exam time">8:00–10:00 AM</td></tr>
+          <tr><td class="name">9:00 AM</td><td data-label="Exam day">Wed, Dec 9</td><td data-label="Exam time">8:00–10:00 AM</td></tr>
+          <tr><td class="name">10:00 AM</td><td data-label="Exam day">Mon, Dec 7</td><td data-label="Exam time">10:15 AM–12:15 PM</td></tr>
+          <tr><td class="name">11:00 AM</td><td data-label="Exam day">Wed, Dec 9</td><td data-label="Exam time">10:15 AM–12:15 PM</td></tr>
+          <tr><td class="name">12:00 PM</td><td data-label="Exam day">Mon, Dec 7</td><td data-label="Exam time">12:30–2:30 PM</td></tr>
+          <tr><td class="name">1:00 PM</td><td data-label="Exam day">Wed, Dec 9</td><td data-label="Exam time">12:30–2:30 PM</td></tr>
+          <tr><td class="name">2:00 PM</td><td data-label="Exam day">Mon, Dec 7</td><td data-label="Exam time">2:45–4:45 PM</td></tr>
+          <tr><td class="name">3:00 PM</td><td data-label="Exam day">Wed, Dec 9</td><td data-label="Exam time">2:45–4:45 PM</td></tr>
+          <tr><td class="name">4:00 PM</td><td data-label="Exam day">Mon, Dec 7</td><td data-label="Exam time">5:00–7:00 PM</td></tr>
+          <tr><td class="name">5:00 PM</td><td data-label="Exam day">Wed, Dec 9</td><td data-label="Exam time">5:00–7:00 PM</td></tr>
+          <tr><td class="name">6:00 PM</td><td data-label="Exam day">Mon, Dec 7</td><td data-label="Exam time">7:15–9:15 PM</td></tr>
+          <tr><td class="name">7:00 PM</td><td data-label="Exam day">Wed, Dec 9</td><td data-label="Exam time">7:15–9:15 PM</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-h">Classes meeting T, R, or TR</h3>
+      <table class="exam">
+        <thead><tr><th scope="col">Class starts</th><th scope="col">Exam day</th><th scope="col">Exam time</th></tr></thead>
+        <tbody>
+          <tr><td class="name">8:00 AM</td><td data-label="Exam day">Tue, Dec 8</td><td data-label="Exam time">8:00–10:00 AM</td></tr>
+          <tr><td class="name">9:30 AM</td><td data-label="Exam day">Thu, Dec 10</td><td data-label="Exam time">8:00–10:00 AM</td></tr>
+          <tr><td class="name">11:00 AM</td><td data-label="Exam day">Tue, Dec 8</td><td data-label="Exam time">10:15 AM–12:15 PM</td></tr>
+          <tr><td class="name">12:30 PM</td><td data-label="Exam day">Thu, Dec 10</td><td data-label="Exam time">10:15 AM–12:15 PM</td></tr>
+          <tr><td class="name">2:00 PM</td><td data-label="Exam day">Tue, Dec 8</td><td data-label="Exam time">12:30–2:30 PM</td></tr>
+          <tr><td class="name">3:30 PM</td><td data-label="Exam day">Thu, Dec 10</td><td data-label="Exam time">12:30–2:30 PM</td></tr>
+          <tr><td class="name">5:00 PM</td><td data-label="Exam day">Tue, Dec 8</td><td data-label="Exam time">2:45–4:45 PM</td></tr>
+          <tr><td class="name">6:30 PM</td><td data-label="Exam day">Thu, Dec 10</td><td data-label="Exam time">5:00–7:00 PM</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-h">Make-up exams</h3>
+      <table class="exam">
+        <tbody>
+          <tr><td class="name">Tue, Dec 8</td><td data-label="Time">7:15–9:15 PM</td></tr>
+          <tr><td class="name">Thu, Dec 10</td><td data-label="Time">2:45–4:45 PM</td></tr>
+        </tbody>
+      </table>
+      <h3 class="sub-h">Good to know</h3>
+      <ul class="focus">
+        <li>Instructors can't change the day or time of a scheduled final.</li>
+        <li>If your class start time doesn't match a time above, your instructor picks the closest exam slot. Check your syllabus.</li>
+        <li><strong>Missed a final?</strong> Notify your instructor within 24 hours, or you'll automatically receive a failing grade for the exam. Absences are excused only for unavoidable, documented circumstances (e.g., a medical or family emergency).</li>
+        <li><strong>Three or more exams in one day?</strong> Tell the instructor of your latest exam at least one week before finals; they'll reschedule it.</li>
+      </ul>
+    </details>
 
     <h2>Questions?</h2>
     <p class="lead">Start with your faculty advisor (find them under <a href="#people">Faculty &amp; Staff</a>). For advising and registration help, contact CACE at <a href="mailto:cace@flagler.edu">cace@flagler.edu</a>.</p>
@@ -948,6 +1055,154 @@ DEPARTMENTS.forEach(d => {
   dirPanels.appendChild(panel);
 });
 
+/* ============================================================
+   ACADEMIC CALENDAR. [term, start, end (or ""), time (or ""), event, link (or "")]
+   Dates are YYYY-MM-DD. Coming Up on Home picks the next events automatically.
+   ============================================================ */
+const CAL = [
+  ["fall","2026-08-01","","","Fall balances due"],
+  ["fall","2026-08-07","","","Transfer Student Orientation"],
+  ["fall","2026-08-21","","","New students arrive"],
+  ["fall","2026-08-21","2026-08-29","","Welcome Week"],
+  ["fall","2026-08-24","2026-08-25","","Residence halls open for returning students"],
+  ["fall","2026-08-25","","","Convocation"],
+  ["fall","2026-08-26","","","Fall 2026 classes begin"],
+  ["fall","2026-09-01","","5:00 PM","Deadline to add or drop a course"],
+  ["fall","2026-09-07","","","Labor Day (College closed)"],
+  ["fall","2026-09-24","","","Founders Day"],
+  ["fall","2026-09-25","2026-09-27","","Family & Friends Weekend"],
+  ["fall","2026-10-12","2026-10-13","","Fall Break (classes canceled)"],
+  ["fall","2026-10-15","","","Graduation Application deadline for May 2027 graduates","#adv-register"],
+  ["fall","2026-10-17","","","Campus Visit Day"],
+  ["fall","2026-10-20","2026-10-29","","Registration for Spring 2027. Check your time in your CACE email","#adv-register"],
+  ["fall","2026-10-29","","5:00 PM","Last day to withdraw from a course with a W"],
+  ["fall","2026-11-15","","","Fall payment plan ends"],
+  ["fall","2026-11-16","","","Spring bills available online"],
+  ["fall","2026-11-19","","","FlagSHIP Celebration"],
+  ["fall","2026-11-25","2026-11-27","","Thanksgiving Holiday (College closed)"],
+  ["fall","2026-12-01","","","FlagSHIP JanTerm trip balance due"],
+  ["fall","2026-12-01","","","Early enrollment begins for Spring payment plan"],
+  ["fall","2026-12-04","","","Baccalaureate (classes canceled)"],
+  ["fall","2026-12-07","2026-12-10","","Final examinations"],
+  ["fall","2026-12-10","","","Fall 2026 semester ends"],
+  ["fall","2026-12-11","","11:00 AM","Residence halls close"],
+  ["fall","2026-12-15","","","Spring balance due; Spring payment plans begin"],
+  ["fall","2026-12-21","2027-01-01","","College closed for holidays"],
+
+  ["spring","2027-01-03","","","Residence halls open for FlagSHIP JanTerm students"],
+  ["spring","2027-01-04","","","College opens"],
+  ["spring","2027-01-04","","","FlagSHIP 2027 JanTerm begins (travel course dates vary; check with your professor)"],
+  ["spring","2027-01-15","","","FlagSHIP 2027 JanTerm ends (travel course dates vary)"],
+  ["spring","2027-01-15","","","New students arrive; New Student Orientation"],
+  ["spring","2027-01-15","","","Registration for part-time students"],
+  ["spring","2027-01-16","2027-01-22","","Welcome Week"],
+  ["spring","2027-01-16","2027-01-17","","Residence halls open for returning students"],
+  ["spring","2027-01-18","","","Martin Luther King Jr. Day (College closed)"],
+  ["spring","2027-01-20","","","Spring 2027 classes begin"],
+  ["spring","2027-01-26","","5:00 PM","Deadline to add or drop a course"],
+  ["spring","2027-02-15","","","Admitted Student Day"],
+  ["spring","2027-03-01","","","FlagSHIP Maymester trip balance due"],
+  ["spring","2027-03-06","","","Campus Visit Day"],
+  ["spring","2027-03-15","2027-03-19","","Spring Break (classes canceled; College closed Mar 18–19)"],
+  ["spring","2027-03-26","","5:00 PM","Last day to withdraw from a course with a W"],
+  ["spring","2027-03-29","2027-04-02","","Spirit Week"],
+  ["spring","2027-04-15","","","Spring payment plan ends"],
+  ["spring","2027-04-16","","","Admitted Student Day"],
+  ["spring","2027-04-20","","","FlagSHIP 2028 registration"],
+  ["spring","2027-04-30","","","Reading Day (classes canceled)"],
+  ["spring","2027-05-03","2027-05-06","","Final examinations"],
+  ["spring","2027-05-06","","","Spring 2027 semester ends"],
+  ["spring","2027-05-07","","11:00 AM","Residence halls close"],
+  ["spring","2027-05-10","","","Commencement (St. Augustine Amphitheatre)"],
+
+  ["summer","2027-05-01","","","Summer A balance due"],
+  ["summer","2027-05-11","","","FlagSHIP 2027 Maymester begins (travel course dates vary)"],
+  ["summer","2027-05-14","","","Summer residence hall opens"],
+  ["summer","2027-05-17","","","Summer 2027 Term A begins"],
+  ["summer","2027-05-20","2027-05-23","","Alumni Weekend"],
+  ["summer","2027-05-28","","","FlagSHIP 2027 Maymester ends (travel course dates vary)"],
+  ["summer","2027-05-29","","5:00 PM","Deadline to add or drop a Summer course"],
+  ["summer","2027-05-31","","","Memorial Day (College closed)"],
+  ["summer","2027-06-01","","","Summer B balance due"],
+  ["summer","2027-06-10","","5:00 PM","Last day to withdraw from a course with a W (Term A)"],
+  ["summer","2027-06-14","2027-06-15","","New Student Orientation"],
+  ["summer","2027-06-15","","","Fall 2027 bills available online"],
+  ["summer","2027-06-24","2027-06-25","","New Student Orientation"],
+  ["summer","2027-06-25","","","Summer 2027 Term A ends"],
+  ["summer","2027-06-25","","5:00 PM","Summer residence hall closes"],
+  ["summer","2027-07-01","","","Early enrollment begins for Fall 2027 payment plan"],
+  ["summer","2027-07-05","","","Fourth of July observed (College closed)"],
+  ["summer","2027-07-06","","","Summer 2027 Term B begins"],
+  ["summer","2027-07-09","","5:00 PM","Last day to add or drop Summer Term B courses"],
+  ["summer","2027-07-15","","","Fall 2027 payment plan begins"],
+  ["summer","2027-07-15","2027-07-16","","New Student Orientation"],
+  ["summer","2027-07-23","","5:00 PM","Last day to withdraw from a course with a W (Term B)"],
+  ["summer","2027-07-26","2027-07-27","","New Student Orientation"],
+  ["summer","2027-08-06","","","Transfer Student Orientation"],
+  ["summer","2027-08-06","","","Summer 2027 Term B ends"]
+];
+const COMING_UP_COUNT = 6;
+/* ============================ END CALENDAR ============================ */
+
+(function () {
+  const D = iso => { const [y, m, d] = iso.split("-").map(Number); return new Date(y, m - 1, d); };
+  const fmt = (dt, withDay) => dt.toLocaleDateString("en-US", withDay ? { weekday: "short", month: "short", day: "numeric" } : { month: "short", day: "numeric" });
+  const when = e => {
+    const s = D(e[1]), en = e[2] ? D(e[2]) : null;
+    let t = fmt(s, true);
+    if (en) t += " – " + fmt(en, true);
+    return t;
+  };
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const ends = e => D(e[2] || e[1]);
+  const what = e => {
+    let h = esc(e[4]);
+    if (e[3]) h += ` <span class="cal-time">${esc(e[3])}</span>`;
+    if (e[5]) h += ` <a href="${e[5]}">Details</a>`;
+    return h;
+  };
+  const row = (e, cls) => `<tr class="${cls || ""}"><td class="name cal-date">${when(e)}</td><td data-label="Event">${what(e)}</td></tr>`;
+
+  // Term tables, grouped by month
+  ["fall", "spring", "summer"].forEach(term => {
+    const evs = CAL.filter(e => e[0] === term).sort((a, b) => a[1].localeCompare(b[1]));
+    let html = "", month = "";
+    evs.forEach(e => {
+      const m = D(e[1]).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+      if (m !== month) {
+        if (month) html += "</tbody></table>";
+        html += `<h3 class="sub-h">${m}</h3><table class="cal"><tbody>`;
+        month = m;
+      }
+      html += row(e, ends(e) < today ? "past" : "");
+    });
+    // (month headings for fully-past months get hidden below)
+    if (month) html += "</tbody></table>";
+    const panel = document.getElementById("panel-cal-" + term);
+    panel.innerHTML = html;
+    panel.querySelectorAll("h3.sub-h").forEach(h => {
+      const tb = h.nextElementSibling;
+      if (tb && [...tb.querySelectorAll("tr")].every(r => r.classList.contains("past"))) { h.classList.add("all-past"); tb.classList.add("all-past"); }
+    });
+  });
+
+  // Coming Up: next events that haven't ended yet
+  const next = CAL.filter(e => ends(e) >= today).sort((a, b) => a[1].localeCompare(b[1])).slice(0, COMING_UP_COUNT);
+  document.getElementById("coming-up").innerHTML = next.length
+    ? next.map(e => row(e, D(e[1]) <= today ? "now" : "")).join("")
+    : `<tr><td>No upcoming dates. Check the full calendar below.</td></tr>`;
+
+  const tg = document.getElementById("toggle-past"), w = tg.closest(".widget");
+  tg.addEventListener("click", () => {
+    const on = w.classList.toggle("show-past");
+    tg.setAttribute("aria-pressed", on);
+    tg.textContent = on ? "Hide past dates" : "Show past dates";
+  });
+
+  // Open the calendar on the current term
+  window._calTerm = today < D("2027-01-01") ? "fall" : today < D("2027-05-11") ? "spring" : "summer";
+})();
+
 /* Generic tabs: every [role=tablist] on the page, including the Community/Research switch */
 const allTabs = [];
 document.querySelectorAll('[role="tablist"]').forEach(list => {
@@ -960,6 +1215,12 @@ document.querySelectorAll('[role="tablist"]').forEach(list => {
       document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
     });
     if (focus) tab.focus();
+    const L = tab.parentElement;
+    if (L.scrollWidth > L.clientWidth) {
+      const left = tab.offsetLeft - L.offsetLeft, right = left + tab.offsetWidth;
+      if (left < L.scrollLeft) L.scrollLeft = left - 8;
+      else if (right > L.scrollLeft + L.clientWidth) L.scrollLeft = right - L.clientWidth + 8;
+    }
   };
   tabs.forEach(t => {
     t._select = select;
@@ -980,6 +1241,8 @@ document.querySelectorAll('[role="tablist"]').forEach(list => {
 
 /* Open from URL: #research, #psychology, #irb, #psy-research, etc.
    Also opens whichever section contains that tab. */
+{ const t = allTabs.find(x => x.id === "tab-cal-" + window._calTerm); if (t) t._select(t, false); }
+
 function openTab(t) {
   while (t) {
     t._select(t, false);
@@ -993,6 +1256,33 @@ function openFromHash() {
 }
 openFromHash();
 window.addEventListener("hashchange", openFromHash);
+
+/* Breadcrumb: shows where you are (Section › Tab) */
+function updateCrumbs() {
+  const el = document.getElementById("crumbs"); if (!el) return;
+  const seg = document.querySelector('.sitenav [aria-selected="true"]');
+  const parts = [`<a href="#home">Home</a>`];
+  if (seg && seg.id !== "tab-home") {
+    const sec = document.getElementById(seg.getAttribute("aria-controls"));
+    const sub = sec && sec.querySelector('.tabs [aria-selected="true"]');
+    parts.push(sub ? `<a href="#${seg.id.replace("tab-","")}">${seg.textContent}</a>` : `<span class="cur">${seg.textContent}</span>`);
+    if (sub) parts.push(`<span class="cur">${sub.textContent}</span>`);
+  } else { el.innerHTML = ""; el.hidden = true; return; }
+  el.hidden = false;
+  el.innerHTML = parts.join('<span class="sep">›</span>');
+}
+document.addEventListener("click", e => { if (e.target.closest('[role="tab"]')) setTimeout(updateCrumbs, 0); });
+window.addEventListener("hashchange", () => setTimeout(updateCrumbs, 0));
+setTimeout(updateCrumbs, 0);
+
+/* #finals opens Home and expands the exam schedule */
+function openFinals() {
+  if (location.hash !== "#finals") return;
+  const h = allTabs.find(t => t.id === "tab-home"); if (h) openTab(h);
+  const d = document.getElementById("finals"); if (d) { d.open = true; d.scrollIntoView(); }
+  updateCrumbs();
+}
+openFinals(); window.addEventListener("hashchange", openFinals);
 </script>
 </body>
 </html>
