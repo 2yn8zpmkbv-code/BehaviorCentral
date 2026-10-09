@@ -21,7 +21,7 @@
   body {
     margin: 0; background: var(--bg); color: var(--ink);
     font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px; line-height: 1.5;
+    font-size: 17px; line-height: 1.55;
   }
   .wrap { max-width: none; padding: 4px 2px 24px; }
   a { color: #2b2b2b; text-decoration-color: rgba(0,0,0,.28); text-underline-offset: 2px; }
@@ -34,7 +34,7 @@
   }
   .sitenav .seg {
     appearance: none; border: 0; background: transparent; cursor: pointer;
-    font: inherit; font-weight: 700; font-size: 0.95em; color: var(--muted);
+    font: inherit; font-weight: 700; font-size: 1em; color: var(--muted);
     padding: 8px 12px; border-radius: 999px; flex: 1 1 0; text-align: center; white-space: nowrap;
   }
   .sitenav .seg:hover { color: var(--maroon); }
@@ -59,7 +59,7 @@
   .site-strip { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; align-items: center;
     background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%); color: #fff;
     border-radius: 10px; padding: 10px 18px; margin-bottom: 12px;
-    font-size: 0.78em; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    font-size: 0.82em; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
   .strip-right { opacity: .8; }
   .sec-head { margin: 4px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
   .sec-head h1 { margin: 0; font-size: 1.6em; font-weight: 900; color: var(--ink); }
@@ -70,7 +70,7 @@
   .tab {
     appearance: none; border: 1px solid var(--line); border-bottom: none;
     background: #f4f4f4; color: var(--muted);
-    padding: 8px 14px; font: inherit; font-size: 0.95em; font-weight: 600;
+    padding: 9px 16px; font: inherit; font-size: 0.98em; font-weight: 700;
     border-radius: 8px 8px 0 0; cursor: pointer;
   }
   .tab:hover { color: var(--maroon); }
@@ -88,12 +88,12 @@
   .note { font-size: 0.85em; color: var(--muted); font-style: italic; margin: 6px 0 0; }
 
   /* ---------- Directory table ---------- */
-  table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.98em; }
   th { text-align: left; font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); padding: 6px 10px; border-bottom: 2px solid var(--line); }
   td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
   tbody tr:nth-child(even) { background: var(--stripe); }
   .name { font-weight: 700; }
-  .role { display: block; color: var(--muted); font-size: 0.9em; font-weight: 400; }
+  .role { display: block; color: var(--muted); font-size: 0.92em; font-weight: 400; }
   td a[href^="mailto"] { word-break: break-all; }
   .col-name { width: 32%; } .col-email { width: 26%; } .col-office { width: 18%; }
 
@@ -187,10 +187,10 @@
   @media (max-width: 520px) { .tiles { grid-template-columns: 1fr; } }
   .tile { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); text-decoration: none; transition: border-color .15s, box-shadow .15s; }
   .tile:hover { border-color: #cdb9b8; box-shadow: 0 3px 10px rgba(0,0,0,.06); }
-  .tile-title { display: block; font-weight: 900; font-size: 1.05em; margin-bottom: 4px; }
-  .tile-desc { display: block; font-size: 0.92em; color: var(--muted); }
+  .tile-title { display: block; font-weight: 900; font-size: 1.12em; margin-bottom: 4px; }
+  .tile-desc { display: block; font-size: 0.96em; color: var(--muted); }
 
-  .site-foot { margin-top: 36px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.82em; color: var(--muted); }
+  .site-foot { margin-top: 36px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.88em; color: var(--muted); }
 
   /* ---------- Phones ---------- */
   @media (max-width: 640px) {
