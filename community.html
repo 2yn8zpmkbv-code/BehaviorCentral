@@ -1367,7 +1367,7 @@ openFinals(); window.addEventListener("hashchange", openFinals);
    ============================================================ */
 (function () {
   const LAT = 29.8947, LON = -81.3145;
-  const NWS_PAGE = `https://forecast.weather.gov/MapClick.php?lat=${LAT}&lon=${LON}`;
+  const NWS_PAGE = `https://forecast.weather.gov/MapClick.php?CityName=St.+Augustine&state=FL&site=JAX&textField1=${LAT}&textField2=${LON}`;
 
   fetch(`https://api.weather.gov/alerts/active?point=${LAT},${LON}`, { headers: { Accept: "application/geo+json" } })
     .then(r => r.ok ? r.json() : Promise.reject())
