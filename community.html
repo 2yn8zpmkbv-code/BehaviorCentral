@@ -310,10 +310,9 @@
   .wx-alert { border-top: 0; padding: 11px 16px 12px; }
   /* ================= Glass theme (overrides) ================= */
   :root { --glass: rgba(255,255,255,.62); --glass-border: rgba(255,255,255,.75); --wine: #7d2f2d; }
-  body {
-    background:
-      linear-gradient(180deg, #f2f2f5 0, #fbfbfd 420px);
-  }
+  body { background: linear-gradient(180deg, #fbfbfc 0, #fefeff 420px); }
+  .wrap { padding: 12px 12px 20px; }
+  @media (max-width: 640px) { .wrap { padding: 8px 8px 16px; } }
   .glass, .site-strip, .sitenav, .wx, .widget {
     background: var(--glass);
     border: 1px solid var(--glass-border);
@@ -1380,6 +1379,34 @@ openFinals(); window.addEventListener("hashchange", openFinals);
         `<span class="wx-fine">For closures and class cancellations, follow official Flagler College announcements.</span>`;
       el.hidden = false; document.getElementById("wx").hidden = false;
     }).catch(() => {});
+})();
+
+/* ============================================================
+   AUTO-HEIGHT FOR CANVAS. Tells Canvas how tall this page is so the
+   frame grows/shrinks to fit (no inner scrollbar, no empty space).
+   Uses Canvas's built-in "lti.frameResize" message. Harmless elsewhere.
+   ============================================================ */
+(function () {
+  if (window.parent === window) return;              // not inside a frame
+  const wrap = document.querySelector(".wrap");
+  let last = 0, queued = false;
+  function send() {
+    queued = false;
+    const h = Math.ceil(wrap.getBoundingClientRect().height + 24);
+    if (Math.abs(h - last) < 3) return;
+    last = h;
+    window.parent.postMessage(JSON.stringify({ subject: "lti.frameResize", height: h }), "*");
+  }
+  function queue() { if (!queued) { queued = true; requestAnimationFrame(send); } }
+  if ("ResizeObserver" in window) new ResizeObserver(queue).observe(wrap);
+  window.addEventListener("load", queue);
+  document.addEventListener("toggle", queue, true);   // collapsibles
+  document.addEventListener("click", queue);
+  if (document.fonts) document.fonts.ready.then(queue);
+  queue();
+  // When switching sections from the top menu, bring the top of the page back into view
+  document.querySelectorAll(".sitenav [role=tab]").forEach(t =>
+    t.addEventListener("click", () => window.parent.postMessage(JSON.stringify({ subject: "lti.scrollToTop" }), "*")));
 })();
 </script>
 </body>
